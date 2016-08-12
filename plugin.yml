@@ -1,0 +1,3 @@
+name: buildAssist
+main: com.github.unchama.buildassist.BuildAssist
+version: 0.0.0
