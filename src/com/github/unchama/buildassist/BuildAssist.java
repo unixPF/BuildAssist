@@ -17,88 +17,119 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class BuildAssist extends JavaPlugin {
 	public static BuildAssist plugin;
-	public static final boolean DEBUG = true;
-	private List<BukkitTask> tasklist = new ArrayList();
-	public static final HashMap<UUID, PlayerData> playermap = new HashMap();
+	public static Boolean DEBUG = false;
+	//起動するタスクリスト
+	private List<BukkitTask> tasklist = new ArrayList<BukkitTask>();
+	//Playerdataに依存するデータリスト
+	public static final HashMap<UUID,PlayerData> playermap = new HashMap<UUID,PlayerData>();
 	private HashMap<String, TabExecutor> commandlist;
-	public static final List<Integer> levellist = new ArrayList(
-			Arrays.asList(new Integer[] { Integer.valueOf(0),
-					Integer.valueOf(15), Integer.valueOf(49),
-					Integer.valueOf(106), Integer.valueOf(198),
-					Integer.valueOf(333), Integer.valueOf(705),
-					Integer.valueOf(1265), Integer.valueOf(2105),
-					Integer.valueOf(3347), Integer.valueOf(4589),
-					Integer.valueOf(5831), Integer.valueOf(7073),
-					Integer.valueOf(8315), Integer.valueOf(9557),
-					Integer.valueOf(11047), Integer.valueOf(12835),
-					Integer.valueOf(14980), Integer.valueOf(17554),
-					Integer.valueOf(20642), Integer.valueOf(24347),
-					Integer.valueOf(28793), Integer.valueOf(34128),
-					Integer.valueOf(40530), Integer.valueOf(48212),
-					Integer.valueOf(57430), Integer.valueOf(68491),
-					Integer.valueOf(81764), Integer.valueOf(97691),
-					Integer.valueOf(116803), Integer.valueOf(135915),
-					Integer.valueOf(155027), Integer.valueOf(174139),
-					Integer.valueOf(193251), Integer.valueOf(212363),
-					Integer.valueOf(235297), Integer.valueOf(262817),
-					Integer.valueOf(295841), Integer.valueOf(335469),
-					Integer.valueOf(383022), Integer.valueOf(434379),
-					Integer.valueOf(489844), Integer.valueOf(549746),
-					Integer.valueOf(614440), Integer.valueOf(684309),
-					Integer.valueOf(759767), Integer.valueOf(841261),
-					Integer.valueOf(929274), Integer.valueOf(1024328),
-					Integer.valueOf(1126986),
+	//lvの閾値
+	public static final List<Integer> levellist = new ArrayList<Integer>(Arrays.asList(
+			0,15,49,106,198,//5
+			333,705,1265,2105,3347,//10
+			4589,5831,7073,8315,9557,//15
+			11047,12835,14980,17554,20642,//20
+			24347,28793,34128,40530,48212,//25
+			57430,68491,81764,97691,116803,//30
+			135915,155027,174139,193251,212363,//35
+			235297,262817,295841,335469,383022,//40
+			434379,489844,549746,614440,684309,//45
+			759767,841261,929274,1024328,1126986,//50
 
-					Integer.valueOf(1237856), Integer.valueOf(1362856),
-					Integer.valueOf(1487856), Integer.valueOf(1612856),
-					Integer.valueOf(1737856), Integer.valueOf(1862856),
-					Integer.valueOf(1987856), Integer.valueOf(2112856),
-					Integer.valueOf(2237856), Integer.valueOf(2362856),
-					Integer.valueOf(2537856), Integer.valueOf(2712856),
-					Integer.valueOf(2887856), Integer.valueOf(3062856),
-					Integer.valueOf(3237856), Integer.valueOf(3412856),
-					Integer.valueOf(3587856), Integer.valueOf(3762856),
-					Integer.valueOf(3937856), Integer.valueOf(4112856),
-					Integer.valueOf(4362856), Integer.valueOf(4612856),
-					Integer.valueOf(4862856), Integer.valueOf(5112856),
-					Integer.valueOf(5362856), Integer.valueOf(5612856),
-					Integer.valueOf(5862856), Integer.valueOf(6112856),
-					Integer.valueOf(6362856), Integer.valueOf(6612856),
-					Integer.valueOf(6942856), Integer.valueOf(7272856),
-					Integer.valueOf(7602856), Integer.valueOf(7932856),
-					Integer.valueOf(8262856), Integer.valueOf(8592856),
-					Integer.valueOf(8922856), Integer.valueOf(9252856),
-					Integer.valueOf(9582856), Integer.valueOf(9912856),
-					Integer.valueOf(10332856), Integer.valueOf(10752856),
-					Integer.valueOf(11172856), Integer.valueOf(11592856),
-					Integer.valueOf(12012856), Integer.valueOf(12432856),
-					Integer.valueOf(12852856), Integer.valueOf(13272856),
-					Integer.valueOf(13692856), Integer.valueOf(14112856) }));
-	public static final List<Material> materiallist = new ArrayList(
-			Arrays.asList(new Material[] { Material.STONE, Material.NETHERRACK,
-					Material.NETHER_BRICK, Material.DIRT, Material.GRAVEL,
-					Material.LOG, Material.LOG_2, Material.GRASS,
-					Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE,
-					Material.DIAMOND_ORE, Material.LAPIS_ORE,
-					Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.SAND,
-					Material.SANDSTONE, Material.QUARTZ_ORE,
-					Material.END_BRICKS, Material.ENDER_STONE, Material.ICE,
-					Material.PACKED_ICE, Material.OBSIDIAN, Material.MAGMA,
-					Material.SOUL_SAND }));
+			/*
+			新経験値テーブル
+			51-60→125,000
+			61-70→175,000
+			71-80→250,000
+			81-90→330,000
+			91-100→420,000
+			これで51-100の累計が1300万
+			(毎日14.5万掘り続けて3か月ペース)
+			(毎日21.5万掘り続けて2か月ペース)
+			(毎日43.3万掘り続けて1か月ペース)
+			 */
 
-	public BuildAssist() {
-	}
+			1237856,1362856,1487856,1612856,1737856,//55
+			1862856,1987856,2112856,2237856,2362856,//60
+			2537856,2712856,2887856,3062856,3237856,//65
+			3412856,3587856,3762856,3937856,4112856,//70
+			4362856,4612856,4862856,5112856,5362856,//75
+			5612856,5862856,6112856,6362856,6612856,//80
+			6942856,7272856,7602856,7932856,8262856,//85
+			8592856,8922856,9252856,9582856,9912856,//90
+			10332856,10752856,11172856,11592856,12012856,//95
+			12432856,12852856,13272856,13692856,14112856//100
 
+			/*
+			新経験値テーブル(案)
+			100-110→500,000
+			110-120→600,000
+			120-130→710,000
+			130-140→830,000
+			140-150→960,000
+			150-160→1,110,000
+			160-170→1,265,000
+			170-180→1,430,000
+			180-190→1,610,000
+			190-200→1,800,000
+			 */
+
+			//105
+			//110
+			//115
+			//120
+			//125
+			//130
+			//135
+			//140
+			//145
+			//150
+			//155
+			//160
+			//165
+			//170
+			//175
+			//180
+			//185
+			//190
+			//195
+			//200
+
+			/* ver0.3.0以前の経験値テーブル
+			2487856,2637856,2787856,2937856,3087856,//65
+			3237856,3387856,3537856,3687856,3837856,//70
+			3987856,4162856,4337856,4512856,4687856,//75
+			4862856,5037856,5212856,5387856,5562856,//80
+			5737856,5937856,6137856,6337856,6537856,//85
+			6737856,6937856,7137856,7337856,7537856,//90
+			7737856,7962856,8187856,8412856,8637856,//95
+			8862856,9087856,9312856,9537856,9762856,//100
+			10000000//GOD
+			*/
+			));
+	public static final List<Material> materiallist = new ArrayList<Material>(Arrays.asList(
+			Material.STONE,Material.NETHERRACK,Material.NETHER_BRICK,Material.DIRT
+			,Material.GRAVEL,Material.LOG,Material.LOG_2,Material.GRASS
+			,Material.COAL_ORE,Material.IRON_ORE,Material.GOLD_ORE,Material.DIAMOND_ORE
+			,Material.LAPIS_ORE,Material.EMERALD_ORE,Material.REDSTONE_ORE,Material.SAND
+			,Material.SANDSTONE,Material.QUARTZ_ORE,Material.END_BRICKS,Material.ENDER_STONE
+			,Material.ICE,Material.PACKED_ICE,Material.OBSIDIAN,Material.MAGMA,Material.SOUL_SAND
+			));
+
+
+	@Override
 	public void onEnable() {
 		plugin = this;
 
-		this.commandlist = new HashMap();
-		this.commandlist.put("fly", new flyCommand(plugin));
+		//コマンドの登録
+		commandlist = new HashMap<String, TabExecutor>();
+		commandlist.put("fly", new flyCommand(plugin));
+		getLogger().info("TestText1");
 
-		getServer().getPluginManager().registerEvents(new PlayerJoinListener(),
-				this);
-		getServer().getPluginManager().registerEvents(new EntityListener(),
-				this);
+		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+		getServer().getPluginManager().registerEvents(new EntityListener(), this);
+		getLogger().info("TestText2");
+
 		for (Player p : getServer().getOnlinePlayers()) {
 			UUID uuid = p.getUniqueId();
 
@@ -111,19 +142,17 @@ public class BuildAssist extends JavaPlugin {
 		}
 		getLogger().info("BuildAssist is Enabled!");
 
-		this.tasklist
-				.add(new MinuteTaskRunnable().runTaskTimer(this, 0L, 300L));
+		tasklist.add(new MinuteTaskRunnable().runTaskTimer(this, 0, 1200));
+	}
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+		return commandlist.get(cmd.getName()).onCommand(sender, cmd, label, args);
 	}
 
+	@Override
 	public void onDisable() {
 		for (BukkitTask task : this.tasklist) {
 			task.cancel();
 		}
-	}
-
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
-		return ((TabExecutor) this.commandlist.get(cmd.getName())).onCommand(
-				sender, cmd, label, args);
 	}
 }

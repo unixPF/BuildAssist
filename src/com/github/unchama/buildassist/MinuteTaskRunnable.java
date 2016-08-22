@@ -16,6 +16,7 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 	public MinuteTaskRunnable() {
 	}
 
+	@Override
 	public void run() {
 		this.playermap = BuildAssist.playermap;
 		this.plugin = BuildAssist.plugin;
@@ -37,6 +38,7 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 					if (flytime == 0) {
 						player.sendMessage(ChatColor.GREEN + "Fly効果が終了しました");
 						playerdata.flyflag = false;
+						player.setAllowFlight(false);
 						player.setFlying(false);
 					} else if (!expman.hasExp(10)) {
 						player.sendMessage(ChatColor.RED
@@ -44,8 +46,10 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 						player.sendMessage(ChatColor.RED + "Fly効果を終了しました");
 						playerdata.flytime = 0;
 						playerdata.flyflag = false;
+						player.setAllowFlight(false);
 						player.setFlying(false);
 					} else {
+						player.setAllowFlight(true);
 						player.setFlying(true);
 						player.sendMessage(ChatColor.GREEN + "Fly効果はあと"
 								+ flytime + "分です");
