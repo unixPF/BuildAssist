@@ -29,7 +29,7 @@ public class PlayerJoinListener implements Listener {
 		} else {
 			playerdata = (PlayerData) this.playermap.get(uuid);
 		}
-		int mines = BuildBlock.calcBuildBlock(player);
-		playerdata.levelupdata(player, mines);
+		int builds = BuildBlock.calcBuildBlock(player);
+		playerdata.levelupdata(player, builds);
 	}
 }
