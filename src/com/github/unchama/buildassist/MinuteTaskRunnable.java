@@ -30,9 +30,9 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 				//経験値変更用のクラスを設定
 				ExperienceManager expman = new ExperienceManager(player);
 
-				int mines = BuildBlock.calcBuildBlock(player);
+				int builds = BuildBlock.calcBuildBlock(player);
 
-				playerdata.levelupdata(player, mines);
+				playerdata.levelupdata(player, builds);
 				if (playerdata.flyflag) {
 					int flytime = playerdata.flytime;
 					if (flytime == 0) {

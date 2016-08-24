@@ -13,42 +13,47 @@ public class PlayerData {
 	public boolean flyflag;
 	public int flytime;
 
-	public PlayerData(Player player) {
-		this.name = Util.getName(player);
-		this.uuid = player.getUniqueId();
-	}
-
-	public void levelupdata(Player player, int mines) {
-		calcPlayerLevel(player, mines);
-		setDisplayName(player);
-	}
-
-	private void calcPlayerLevel(Player player, int mines) {
-		int i = this.level + 1;
-		while ((((Integer) BuildAssist.levellist.get(i)).intValue() <= mines)
-				&& (i <= 101)) {
-			i++;
+	//プレイヤーデータクラスのコンストラクタ
+		public PlayerData(Player player){
+			//初期値を設定
+			name = Util.getName(player);
+			uuid = player.getUniqueId();
 		}
-		this.level = (i - 1);
-	}
-
-	public void setDisplayName(Player p) {
-		String displayname = Util.getName(p);
-		if (p.isOp()) {
-			displayname = ChatColor.RED + "<管理人>" + this.name;
+		//レベルを更新
+		public void levelupdata(Player player,int builds) {
+			calcPlayerLevel(player,builds);
+			setDisplayName(player);
 		}
-		if (this.level == 101) {
-			displayname = ChatColor.GOLD + "[ GOD ]" + displayname
-					+ ChatColor.WHITE;
-		} else {
-			displayname = "[ Lv" + this.level + " ]" + displayname
-					+ ChatColor.WHITE;
-		}
-		p.setDisplayName(displayname);
-		p.setPlayerListName(displayname);
-	}
 
-	public boolean isOffline() {
-		return BuildAssist.plugin.getServer().getPlayer(this.name) == null;
+		//プレイヤーレベルを計算し、更新する。
+		private void calcPlayerLevel(Player player,int builds){
+			//現在のランクの次を取得
+			int i = level + 1;
+			//ランクが上がらなくなるまで処理
+			while(BuildAssist.levellist.get(i).intValue() <= builds && i <= 30){
+				if(!BuildAssist.DEBUG){
+					//レベルアップ時のメッセージ
+					player.sendMessage(ChatColor.GOLD+"ﾑﾑｯwwwwwwwﾚﾍﾞﾙｱｯﾌﾟwwwwwww【Lv("+(i-1)+")→Lv("+i+")】");
+				}
+				i++;
+			}
+			level = i-1;
+		}
+
+		//表示される名前に整地レベルを追加
+		public void setDisplayName(Player p) {
+			String displayname = Util.getName(p);
+			if(p.isOp()){
+				//管理人の場合
+				displayname = ChatColor.RED + "<管理人>" + name;
+			}
+				displayname =  "[ B-Lv" + level + " ]" + displayname + ChatColor.WHITE;
+
+			p.setDisplayName(displayname);
+			p.setPlayerListName(displayname);
+		}
+		//オフラインかどうか
+		public boolean isOffline() {
+			return BuildAssist.plugin.getServer().getPlayer(name) == null;
+		}
 	}
-}
