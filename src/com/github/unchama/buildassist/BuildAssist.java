@@ -20,6 +20,10 @@ public class BuildAssist extends JavaPlugin {
 	public static Boolean DEBUG = false;
 	//起動するタスクリスト
 	private List<BukkitTask> tasklist = new ArrayList<BukkitTask>();
+
+	//総建築量ランキング表示用データリスト
+	public static final List<Integer> ranklist = new ArrayList<Integer>();
+
 	//Playerdataに依存するデータリスト
 	public static final HashMap<UUID,PlayerData> playermap = new HashMap<UUID,PlayerData>();
 	private HashMap<String, TabExecutor> commandlist;

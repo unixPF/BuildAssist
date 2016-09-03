@@ -65,6 +65,8 @@ public class flyCommand implements TabExecutor {
 
 			boolean flyflag = playerdata.flyflag;
 			int flytime = playerdata.flytime;
+			boolean Endlessfly = playerdata.Endlessfly;
+
 			if (args[0].equalsIgnoreCase("finish")) {
 				flyflag = false;
 				flytime = 0;
@@ -74,6 +76,24 @@ public class flyCommand implements TabExecutor {
 				player.setFlying(false);
 				sender.sendMessage(ChatColor.GREEN
 						+ "fly効果を停止しました。");
+			} else if(args[0].equalsIgnoreCase("endless")){
+
+				if (!expman.hasExp(10)) {
+				sender.sendMessage(ChatColor.GREEN
+						+ "所持している経験値が、必要経験値量(10)に達していません。");
+				} else {
+					flyflag = true;
+					Endlessfly = true ;
+					flytime = 0 ;
+					playerdata.flyflag = true;
+					playerdata.Endlessfly = true ;
+					playerdata.flytime = 0;
+					player.setAllowFlight(true);
+					player.setFlying(true);
+					sender.sendMessage(ChatColor.GREEN
+							+ "無期限でFLY効果をONにしました。");
+				}
+
 			} else if (isInt(args[0])) {
 				if (Integer.parseInt(args[0]) <= 0) {
 					sender.sendMessage(ChatColor.GREEN
@@ -83,10 +103,16 @@ public class flyCommand implements TabExecutor {
 					sender.sendMessage(ChatColor.GREEN
 							+ "所持している経験値が、必要経験値量(10)に達していません。");
 				}else {
+					if(Endlessfly){
+						sender.sendMessage(ChatColor.GREEN
+								+ "無期限飛行モードは解除されました。");
+					}
 				flytime += Integer.parseInt(args[0]);
 				flyflag = true;
+				Endlessfly = false ;
 				playerdata.flyflag = flyflag;
 				playerdata.flytime = flytime;
+				playerdata.Endlessfly = Endlessfly ;
 				sender.sendMessage(ChatColor.YELLOW + "【FLYコマンド認証】効果の残り時間はあと"
 						+ flytime + "分です。");
 				player.setAllowFlight(true);

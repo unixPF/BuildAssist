@@ -33,7 +33,23 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 				int builds = BuildBlock.calcBuildBlock(player);
 
 				playerdata.levelupdata(player, builds);
-				if (playerdata.flyflag) {
+				if (playerdata.Endlessfly) {
+					if (!expman.hasExp(10)) {
+						player.sendMessage(ChatColor.RED
+								+ "Fly効果の発動に必要な経験値が不足しているため、");
+						player.sendMessage(ChatColor.RED + "Fly効果を終了しました");
+						playerdata.flytime = 0;
+						playerdata.flyflag = false;
+						playerdata.Endlessfly = false ;
+						player.setAllowFlight(false);
+						player.setFlying(false);
+					} else {
+						player.setAllowFlight(true);
+						player.setFlying(true);
+						player.sendMessage(ChatColor.GREEN + "Fly効果は無期限で継続中です");
+						expman.changeExp(-10);
+					}
+				}else if (playerdata.flyflag) {
 					int flytime = playerdata.flytime;
 					if (flytime == 0) {
 						player.sendMessage(ChatColor.GREEN + "Fly効果が終了しました");
