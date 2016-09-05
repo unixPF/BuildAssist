@@ -33,20 +33,20 @@ public class MenuInventoryData {
 
 		//flyflag/flytimeのメニュー表示用変換
 		String Flyallows ;
-		if(playerdata.flyflag = true){
+		if(playerdata.flyflag){
 			Flyallows = "ON" ;
 		}else{
 			Flyallows = "OFF" ;
 		}
 		String FlyTime ;
-		if(playerdata.Endlessfly = true){
+		if(playerdata.Endlessfly){
 			FlyTime = "∞" ;
 		}else {
 			FlyTime = String.valueOf(playerdata.flytime);
 		}
 
 
-		int prank = Util.calcPlayerRank(player);
+//		int prank = Util.calcPlayerRank(player);
 		itemstack = new ItemStack(Material.SKULL_ITEM,1);
 		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
 		itemstack.setDurability((short) 3);
@@ -56,12 +56,14 @@ public class MenuInventoryData {
 		lore.addAll(Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "建築レベル:" + playerdata.level
 				, ChatColor.RESET + "" +  ChatColor.AQUA + "次のレベルまで:" + (BuildAssist.levellist.get(playerdata.level + 1).intValue() - playerdata.totalbuildnum)
 				, ChatColor.RESET + "" +  ChatColor.AQUA + "総建築量:" + playerdata.totalbuildnum
-				, ChatColor.RESET + "" +  ChatColor.GOLD + "ランキング：" + prank + "位" + ChatColor.RESET + "" +  ChatColor.GRAY + "(" + BuildAssist.ranklist.size() +"人中)"
+//				, ChatColor.RESET + "" +  ChatColor.GOLD + "ランキング：" + prank + "位" + ChatColor.RESET + "" +  ChatColor.GRAY + "(" + BuildAssist.ranklist.size() +"人中)"
 
 				));
+		/*
 		if(prank > 1){
 			lore.add(ChatColor.RESET + "" +  ChatColor.AQUA + (prank-1) + "位との差：" + (BuildAssist.ranklist.get(prank-2).intValue() - playerdata.totalbuildnum));
 		}
+		*/
 		lore.add(ChatColor.RESET + "" +  ChatColor.DARK_GRAY + "※1分毎に更新");
 
 		skullmeta.setLore(lore);

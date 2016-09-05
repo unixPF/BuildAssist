@@ -5,6 +5,6 @@ version: 0.0.3
 commands:
   fly:
       description: This is a fly command.
-      usage: /<command> <finish/amount/endless>
+      usage: /<command> <finish/value/endless>
       permission-message: You don't have <permission>
       permission: multibuildplugin.build

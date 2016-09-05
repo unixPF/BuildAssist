@@ -14,6 +14,7 @@ public class Util {
 	public static String getName(String name) {
 		return name.toLowerCase();
 	}
+	/*
 //現在の建築量順位を表示する
 public static int calcPlayerRank(Player p){
 	//ランク用関数
@@ -25,4 +26,5 @@ public static int calcPlayerRank(Player p){
 	}
 	return i+1;
 }
+*/
 }

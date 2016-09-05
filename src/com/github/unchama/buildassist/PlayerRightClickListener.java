@@ -14,8 +14,9 @@ import org.bukkit.inventory.EquipmentSlot;
 
 public class PlayerRightClickListener implements Listener {
 	HashMap<UUID, PlayerData> playermap = BuildAssist.playermap;
+
 	@EventHandler
-	public void onPlayerActiveSkillUIEvent(PlayerInteractEvent event){
+	public void onPlayerMenuUIEvent(PlayerInteractEvent event){
 		//プレイヤーを取得
 		Player player = event.getPlayer();
 		//プレイヤーが起こしたアクションを取得
@@ -23,8 +24,9 @@ public class PlayerRightClickListener implements Listener {
 		//アクションを起こした手を取得
 		EquipmentSlot equipmentslot = event.getHand();
 
-		if(action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)){
-			//右クリックの処理
+
+		if(action.equals(Action.LEFT_CLICK_AIR) || action.equals(Action.LEFT_CLICK_BLOCK)){
+			//左クリックの処理
 			if(player.getInventory().getItemInMainHand().getType().equals(Material.STICK)){
 				//メインハンドに棒を持っているときの処理
 

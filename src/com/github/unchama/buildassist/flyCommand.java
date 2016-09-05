@@ -70,8 +70,10 @@ public class flyCommand implements TabExecutor {
 			if (args[0].equalsIgnoreCase("finish")) {
 				flyflag = false;
 				flytime = 0;
+				Endlessfly = false ;
 				playerdata.flyflag = flyflag;
 				playerdata.flytime = 0;
+				playerdata.Endlessfly = false ;
 				player.setAllowFlight(false);
 				player.setFlying(false);
 				sender.sendMessage(ChatColor.GREEN
