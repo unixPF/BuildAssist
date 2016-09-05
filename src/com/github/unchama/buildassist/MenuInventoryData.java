@@ -88,7 +88,7 @@ public class MenuInventoryData {
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(5分)");
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降5分間に渡り"
 				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
-				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 10");
+				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 100");
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(3,itemstack);
@@ -99,7 +99,7 @@ public class MenuInventoryData {
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(無制限)");
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降OFFにするまで"
 				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
-				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 10");
+				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 100");
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(4,itemstack);
