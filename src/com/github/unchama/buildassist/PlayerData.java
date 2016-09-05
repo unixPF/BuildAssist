@@ -60,6 +60,6 @@ public class PlayerData {
 
 		//オフラインかどうか
 		public boolean isOffline() {
-			return BuildAssist.plugin.getServer().getPlayer(name) == null;
+			return BuildAssist.plugin.getServer().getPlayer(uuid) == null;
 		}
 	}
