@@ -80,9 +80,9 @@ public class flyCommand implements TabExecutor {
 						+ "fly効果を停止しました。");
 			} else if(args[0].equalsIgnoreCase("endless")){
 
-				if (!expman.hasExp(10)) {
+				if (!expman.hasExp(100)) {
 				sender.sendMessage(ChatColor.GREEN
-						+ "所持している経験値が、必要経験値量(10)に達していません。");
+						+ "所持している経験値が、必要経験値量(100)に達していません。");
 				} else {
 					flyflag = true;
 					Endlessfly = true ;
@@ -101,9 +101,9 @@ public class flyCommand implements TabExecutor {
 					sender.sendMessage(ChatColor.GREEN
 							+ "時間指定の数値は「1」以上の整数で行ってください。");
 					return true;
-				}else if (!expman.hasExp(10)) {
+				}else if (!expman.hasExp(100)) {
 					sender.sendMessage(ChatColor.GREEN
-							+ "所持している経験値が、必要経験値量(10)に達していません。");
+							+ "所持している経験値が、必要経験値量(100)に達していません。");
 				}else {
 					if(Endlessfly){
 						sender.sendMessage(ChatColor.GREEN
