@@ -18,8 +18,15 @@ import org.bukkit.scheduler.BukkitTask;
 public class BuildAssist extends JavaPlugin {
 	public static BuildAssist plugin;
 	public static Boolean DEBUG = false;
+
+	public static final String PLAYERDATA_TABLENAME = "playerdata";
+
 	//起動するタスクリスト
 	private List<BukkitTask> tasklist = new ArrayList<BukkitTask>();
+
+	//総建築量ランキング表示用データリスト
+	public static final List<Integer> ranklist = new ArrayList<Integer>();
+
 	//Playerdataに依存するデータリスト
 	public static final HashMap<UUID,PlayerData> playermap = new HashMap<UUID,PlayerData>();
 	private HashMap<String, TabExecutor> commandlist;
@@ -76,6 +83,8 @@ public class BuildAssist extends JavaPlugin {
 
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 		getServer().getPluginManager().registerEvents(new EntityListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerRightClickListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerInventoryListener(), this);
 
 		for (Player p : getServer().getOnlinePlayers()) {
 			UUID uuid = p.getUniqueId();

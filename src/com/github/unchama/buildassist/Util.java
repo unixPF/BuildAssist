@@ -14,4 +14,17 @@ public class Util {
 	public static String getName(String name) {
 		return name.toLowerCase();
 	}
+	/*
+//現在の建築量順位を表示する
+public static int calcPlayerRank(Player p){
+	//ランク用関数
+	int i = 0;
+	int t = BuildBlock.calcBuildBlock(p);
+	//ランクが上がらなくなるまで処理
+	while(BuildAssist.ranklist.get(i).intValue() > t){
+		i++;
+	}
+	return i+1;
+}
+*/
 }
