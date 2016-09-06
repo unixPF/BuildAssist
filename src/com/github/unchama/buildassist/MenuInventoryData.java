@@ -82,16 +82,27 @@ public class MenuInventoryData {
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(2,itemstack);
 
+		//1分限定、FLY ON
+		itemstack = new ItemStack(Material.FEATHER,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.FEATHER);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(1分)");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降1分間に渡り"
+				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
+				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 "+BuildAssist.config.getFlyExp());
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(3,itemstack);
+
 		//5分限定、FLY ON
 		itemstack = new ItemStack(Material.FEATHER,5);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.FEATHER);
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(5分)");
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降5分間に渡り"
 				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
-				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 100");
+				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 "+BuildAssist.config.getFlyExp());
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(3,itemstack);
+		inventory.setItem(4,itemstack);
 
 		//エンドレス、FLY ON
 		itemstack = new ItemStack(Material.ELYTRA,1);
@@ -99,10 +110,10 @@ public class MenuInventoryData {
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(無制限)");
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降OFFにするまで"
 				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
-				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 100");
+				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 "+BuildAssist.config.getFlyExp());
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(4,itemstack);
+		inventory.setItem(5,itemstack);
 
 		//FLY 効果 OFF
 		itemstack = new ItemStack(Material.CHAINMAIL_BOOTS,1);
@@ -112,7 +123,7 @@ public class MenuInventoryData {
 				, ChatColor.RESET + "" + ChatColor.DARK_RED + "FLYを終了します。") ;
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(5,itemstack);
+		inventory.setItem(6,itemstack);
 
 		return inventory;
 

@@ -1,10 +1,10 @@
 name: buildAssist
 main: com.github.unchama.buildassist.BuildAssist
-version: 0.0.3
+version: 0.0.4
 
 commands:
   fly:
       description: This is a fly command.
-      usage: /<command> <finish/value/endless>
+      usage: /<command> <finish/amount/endless>
       permission-message: You don't have <permission>
       permission: multibuildplugin.build

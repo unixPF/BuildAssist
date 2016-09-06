@@ -94,10 +94,17 @@ public class PlayerInventoryListener implements Listener {
 
 
 			if(itemstackcurrent.getType().equals(Material.FEATHER)){
-				//fly 5分予約追加
-				player.closeInventory();
-				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
-				player.chat("/fly 5");
+				if(itemstackcurrent.getAmount() == 1){
+					//fly 1分予約追加
+					player.closeInventory();
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					player.chat("/fly 1");
+				}else if(itemstackcurrent.getAmount() == 5){
+					//fly 5分予約追加
+					player.closeInventory();
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					player.chat("/fly 5");
+				}
 
 			} else if (itemstackcurrent.getType().equals(Material.ELYTRA)){
 				//fly ENDLESSモード

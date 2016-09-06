@@ -30,6 +30,8 @@ public class BuildAssist extends JavaPlugin {
 	//Playerdataに依存するデータリスト
 	public static final HashMap<UUID,PlayerData> playermap = new HashMap<UUID,PlayerData>();
 	private HashMap<String, TabExecutor> commandlist;
+	public static Config config;
+
 	//lvの閾値
 	public static final List<Integer> levellist = new ArrayList<Integer>(Arrays.asList(
 			0,15,50,100,175,//5
@@ -76,6 +78,11 @@ public class BuildAssist extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;
+
+		//コンフィグ系の設定は全てConfig.javaに移動
+		config = new Config(this);
+		config.loadConfig();
+
 
 		//コマンドの登録
 		commandlist = new HashMap<String, TabExecutor>();

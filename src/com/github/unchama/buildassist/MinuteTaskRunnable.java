@@ -31,10 +31,11 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 				ExperienceManager expman = new ExperienceManager(player);
 
 				int builds = BuildBlock.calcBuildBlock(player);
+				int minus = -BuildAssist.config.getFlyExp();
 
 				playerdata.levelupdata(player, builds);
 				if (playerdata.Endlessfly) {
-					if (!expman.hasExp(100)) {
+					if (!expman.hasExp(BuildAssist.config.getFlyExp())) {
 						player.sendMessage(ChatColor.RED
 								+ "Fly効果の発動に必要な経験値が不足しているため、");
 						player.sendMessage(ChatColor.RED + "Fly効果を終了しました");
@@ -47,7 +48,7 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 						player.setAllowFlight(true);
 						player.setFlying(true);
 						player.sendMessage(ChatColor.GREEN + "Fly効果は無期限で継続中です");
-						expman.changeExp(-100);
+						expman.changeExp(minus);
 					}
 				}else if (playerdata.flyflag) {
 					int flytime = playerdata.flytime;
@@ -56,7 +57,7 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 						playerdata.flyflag = false;
 						player.setAllowFlight(false);
 						player.setFlying(false);
-					} else if (!expman.hasExp(100)) {
+					} else if (!expman.hasExp(BuildAssist.config.getFlyExp())) {
 						player.sendMessage(ChatColor.RED
 								+ "Fly効果の発動に必要な経験値が不足しているため、");
 						player.sendMessage(ChatColor.RED + "Fly効果を終了しました");
@@ -70,7 +71,7 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 						player.sendMessage(ChatColor.GREEN + "Fly効果はあと"
 								+ flytime + "分です");
 						playerdata.flytime -= 1;
-						expman.changeExp(-100);
+						expman.changeExp(minus);
 					}
 				}
 			}

@@ -7,6 +7,10 @@ public class Util {
 	public Util() {
 	}
 
+	public static int toInt(String s) {
+		return Integer.parseInt(s);
+	}
+
 	public static String getName(Player p) {
 		return p.getName().toLowerCase();
 	}
