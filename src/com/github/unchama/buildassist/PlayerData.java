@@ -3,7 +3,6 @@ package com.github.unchama.buildassist;
 
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PlayerData {
@@ -38,7 +37,7 @@ public class PlayerData {
 			while(BuildAssist.levellist.get(i).intValue() <= builds && i <= 30){
 				if(!BuildAssist.DEBUG){
 					//レベルアップ時のメッセージ
-					player.sendMessage(ChatColor.GOLD+"ﾑﾑｯwwwwwwwﾚﾍﾞﾙｱｯﾌﾟwwwwwww【Lv("+(i-1)+")→Lv("+i+")】");
+					//player.sendMessage(ChatColor.GOLD+"ﾑﾑｯwwwwwwwﾚﾍﾞﾙｱｯﾌﾟwwwwwww【Lv("+(i-1)+")→Lv("+i+")】");
 				}
 				i++;
 			}
