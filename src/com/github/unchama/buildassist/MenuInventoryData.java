@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -76,8 +77,8 @@ public class MenuInventoryData {
 		itemstack = new ItemStack(Material.COOKED_CHICKEN,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.COOKED_CHICKEN);
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能 情報表示");
-		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + "FLY効果："+ Flyallows
-				, ChatColor.RESET + "" + ChatColor.DARK_RED + "FLY 残り時間："+ FlyTime );
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + "FLY 効果："+ Flyallows
+				, ChatColor.RESET + "" + ChatColor.AQUA + "FLY 残り時間："+ FlyTime );
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(2,itemstack);
@@ -85,9 +86,9 @@ public class MenuInventoryData {
 		//1分限定、FLY ON
 		itemstack = new ItemStack(Material.FEATHER,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.FEATHER);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(1分)");
-		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降1分間に渡り"
-				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON" + ChatColor.AQUA + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "(1分)");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "クリックすると以降1分間に渡り"
+				, ChatColor.RESET + "" + ChatColor.YELLOW + "経験値を消費しつつFLYが可能になります。"
 				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 "+BuildAssist.config.getFlyExp());
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
@@ -96,9 +97,9 @@ public class MenuInventoryData {
 		//5分限定、FLY ON
 		itemstack = new ItemStack(Material.FEATHER,5);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.FEATHER);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(5分)");
-		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降5分間に渡り"
-				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON" + ChatColor.GREEN + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "(5分)");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "クリックすると以降5分間に渡り"
+				, ChatColor.RESET + "" + ChatColor.YELLOW + "経験値を消費しつつFLYが可能になります。"
 				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 "+BuildAssist.config.getFlyExp());
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
@@ -107,9 +108,9 @@ public class MenuInventoryData {
 		//エンドレス、FLY ON
 		itemstack = new ItemStack(Material.ELYTRA,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.ELYTRA);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON(無制限)");
-		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると以降OFFにするまで"
-				, ChatColor.RESET + "" + ChatColor.DARK_RED + "経験値を消費しつつFLYが可能になります。"
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、ON" + ChatColor.RED + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "(無制限)");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "クリックすると以降OFFにするまで"
+				, ChatColor.RESET + "" + ChatColor.YELLOW + "経験値を消費しつつFLYが可能になります。"
 				, ChatColor.RESET + "" +  ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE + "必要経験値量：毎分 "+BuildAssist.config.getFlyExp());
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
@@ -119,8 +120,9 @@ public class MenuInventoryData {
 		itemstack = new ItemStack(Material.CHAINMAIL_BOOTS,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CHAINMAIL_BOOTS);
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "FLY機能、OFF");
-		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "クリックすると、残り時間に関わらず"
-				, ChatColor.RESET + "" + ChatColor.DARK_RED + "FLYを終了します。") ;
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.RED + "クリックすると、残り時間に関わらず"
+				, ChatColor.RESET + "" + ChatColor.RED + "FLYを終了します。") ;
+		itemmeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(6,itemstack);
