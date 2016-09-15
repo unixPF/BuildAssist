@@ -34,7 +34,7 @@ public class PlayerData {
 			//現在のランクの次を取得
 			int i = level + 1;
 			//ランクが上がらなくなるまで処理
-			while(BuildAssist.levellist.get(i).intValue() <= builds && i <= 30){
+			while(BuildAssist.levellist.get(i).intValue() <= builds || i <= 31){
 				if(!BuildAssist.DEBUG){
 					//レベルアップ時のメッセージ
 					//player.sendMessage(ChatColor.GOLD+"ﾑﾑｯwwwwwwwﾚﾍﾞﾙｱｯﾌﾟwwwwwww【Lv("+(i-1)+")→Lv("+i+")】");
