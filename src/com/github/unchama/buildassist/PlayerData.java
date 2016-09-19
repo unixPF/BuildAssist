@@ -22,6 +22,10 @@ public class PlayerData {
 			name = Util.getName(player);
 			uuid = player.getUniqueId();
 			totalbuildnum = BuildBlock.calcBuildBlock(player);
+			level = 1;
+			flyflag = false;
+			flytime = 0;
+			Endlessfly = false;
 		}
 		//レベルを更新
 		public void levelupdata(Player player,int builds) {
@@ -32,16 +36,16 @@ public class PlayerData {
 		//プレイヤーレベルを計算し、更新する。
 		private void calcPlayerLevel(Player player,int builds){
 			//現在のランクの次を取得
-			int i = level + 1;
+			int i = level;
 			//ランクが上がらなくなるまで処理
-			while(BuildAssist.levellist.get(i).intValue() <= builds && i <= 30){
+			while(BuildAssist.levellist.get(i).intValue() <= builds && (i+2) <= BuildAssist.levellist.size()){
 				if(!BuildAssist.DEBUG){
 					//レベルアップ時のメッセージ
 					//player.sendMessage(ChatColor.GOLD+"ﾑﾑｯwwwwwwwﾚﾍﾞﾙｱｯﾌﾟwwwwwww【Lv("+(i-1)+")→Lv("+i+")】");
 				}
 				i++;
 			}
-			level = i-1;
+			level = i;
 		}
 
 //		//表示される名前に建築レベルを追加
