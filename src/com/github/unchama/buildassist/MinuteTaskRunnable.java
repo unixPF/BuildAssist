@@ -46,7 +46,6 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 						player.setFlying(false);
 					} else {
 						player.setAllowFlight(true);
-						player.setFlying(true);
 						player.sendMessage(ChatColor.GREEN + "Fly効果は無期限で継続中です");
 						expman.changeExp(minus);
 					}
@@ -67,7 +66,6 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 						player.setFlying(false);
 					} else {
 						player.setAllowFlight(true);
-						player.setFlying(true);
 						player.sendMessage(ChatColor.GREEN + "Fly効果はあと"
 								+ flytime + "分です");
 						playerdata.flytime -= 1;
