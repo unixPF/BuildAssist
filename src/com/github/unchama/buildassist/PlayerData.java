@@ -16,6 +16,7 @@ public class PlayerData {
 	public int flytime;
 	public boolean Endlessfly ;
 	public boolean ZoneSetSkillFlag ;
+	public int AREAint ;
 
 
 
@@ -32,6 +33,8 @@ public class PlayerData {
 			flytime = 0;
 			Endlessfly = false;
 			ZoneSetSkillFlag = false;
+			AREAint = 2;
+
 
 
 

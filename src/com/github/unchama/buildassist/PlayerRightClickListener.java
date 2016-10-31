@@ -113,11 +113,17 @@ public class PlayerRightClickListener implements Listener  {
 					}
 					*/
 
+					//スキルの範囲設定用
+					int AREAint = playerdata.AREAint ;
+					int SEARCHint = AREAint + 1 ;
+					int AREAintB = (AREAint * 2)+ 1 ;
+					int SEARCHintB = (SEARCHint * 2)+ 1;
+
 
 					//同ブロック探索(7*6*7)の開始座標を計算
-					int searchX = playerlocx - 3 ;
+					int searchX = playerlocx - SEARCHint ;
 					int searchY = playerlocy - 4 ;
-					int searchZ = playerlocz - 3 ;
+					int searchZ = playerlocz - SEARCHint ;
 
 					MaterialData s = null ;
 					MaterialData ws = null ;
@@ -160,11 +166,11 @@ public class PlayerRightClickListener implements Listener  {
 						}
 						searchX ++ ;
 
-						if(searchX > playerlocx + 3){
-						searchX = searchX - 7 ;
+						if(searchX > playerlocx + SEARCHint){
+						searchX = searchX - SEARCHintB ;
 						searchZ ++ ;
-							if(searchZ > playerlocz + 3){
-								searchZ = searchZ - 7 ;
+							if(searchZ > playerlocz + SEARCHint){
+								searchZ = searchZ - SEARCHintB ;
 								searchY ++ ;
 							}
 
@@ -184,9 +190,9 @@ public class PlayerRightClickListener implements Listener  {
 					if(SetReady == true){
 				//実際に範囲内にブロックを設置する処理
 						//設置範囲の基準となる座標
-						int setblockX = playerlocx - 2 ;
+						int setblockX = playerlocx - AREAint ;
 						int setblockY = Y1 ;
-						int setblockZ = playerlocz - 2 ;
+						int setblockZ = playerlocz - AREAint ;
 						int setunder = 1 ;
 
 						int searchedInv = 9 ;
@@ -197,7 +203,7 @@ public class PlayerRightClickListener implements Listener  {
 						Location WGloc = new Location(playerworld,0,0,0)  ;
 
 
-						for(;setblockZ < playerlocz + 3 ;){
+						for(;setblockZ < playerlocz + SEARCHint ;){
 							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR ){
 								setunder = 1;
 								if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR){
@@ -274,16 +280,7 @@ public class PlayerRightClickListener implements Listener  {
 												//ブロックを設置する
 												player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).setType(offhanditem.getType());
 
-												setblockX ++ ;
-
-												if(setblockX > playerlocx + 2){
-													setblockX = setblockX - 5 ;
-													setblockZ ++ ;
-
-													if(setblockZ > playerlocz + 2){
-														break;
-													}
-												}
+												break;
 
 												/*
 												if(offhandslabflag){
@@ -311,12 +308,21 @@ public class PlayerRightClickListener implements Listener  {
 												searchedInv ++ ;
 											}
 										}
-
 									}
 								}
 							}
+							if(searchedInv == 36){
+								break;
+							}
 
- //a
+							setblockX ++ ;
+							player.sendMessage(ChatColor.RED + "" + setblockX ) ;
+
+							if(setblockX > playerlocx + AREAint){
+								setblockX = setblockX - AREAintB ;
+								setblockZ ++ ;
+
+							}
 						}
 					}
 					return;
