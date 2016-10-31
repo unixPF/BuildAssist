@@ -117,6 +117,19 @@ public class PlayerInventoryListener implements Listener {
 				player.closeInventory();
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 				player.chat("/fly finish");
+
+			} else if (itemstackcurrent.getType().equals(Material.STONE)){
+				//範囲設置スキル ON/OFF
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				if(playerdata.ZoneSetSkillFlag == false){
+					playerdata.ZoneSetSkillFlag = true ;
+					player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
+					player.closeInventory();
+				}else if (playerdata.ZoneSetSkillFlag == true ){
+					playerdata.ZoneSetSkillFlag = false ;
+					player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
+					player.closeInventory();
+				}
 			}
 		}
 	}

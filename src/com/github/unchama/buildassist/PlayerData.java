@@ -15,6 +15,11 @@ public class PlayerData {
 	public boolean flyflag;
 	public int flytime;
 	public boolean Endlessfly ;
+	public boolean ZoneSetSkillFlag ;
+
+
+
+
 
 	//プレイヤーデータクラスのコンストラクタ
 		public PlayerData(Player player){
@@ -26,6 +31,10 @@ public class PlayerData {
 			flyflag = false;
 			flytime = 0;
 			Endlessfly = false;
+			ZoneSetSkillFlag = false;
+
+
+
 		}
 		//レベルを更新
 		public void levelupdata(Player player,int builds) {

@@ -45,6 +45,12 @@ public class MenuInventoryData {
 		}else {
 			FlyTime = String.valueOf(playerdata.flytime);
 		}
+		String ZSSkill ;
+		if(playerdata.ZoneSetSkillFlag){
+			ZSSkill = "ON" ;
+		}else {
+			ZSSkill = "OFF" ;
+		}
 
 
 //		int prank = Util.calcPlayerRank(player);
@@ -126,6 +132,18 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(6,itemstack);
+
+		//範囲設置スキル ON/OFFボタン
+		itemstack = new ItemStack(Material.STONE,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+		itemmeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "設置範囲スキル、現在：" + ZSSkill );
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "「スニーク+左クリック」をすると、"
+				, ChatColor.RESET + "" + ChatColor.YELLOW + "オフハンドに持っているブロックと同じ物を"
+				, ChatColor.RESET + "" + ChatColor.YELLOW  + "インベントリ内から消費し設置します。"
+				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "＜クリックでON/OFF切り替え＞");
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(20,itemstack);
 
 		return inventory;
 
