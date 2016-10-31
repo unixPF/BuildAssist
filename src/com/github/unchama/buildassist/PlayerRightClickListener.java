@@ -240,7 +240,6 @@ public class PlayerRightClickListener implements Listener  {
 										}
 										//スロットのアイテムが空白だった場合の処理(エラー回避のため)
 										if(ItemInInv == null ){
-											player.sendMessage(ChatColor.RED + "スロット空白："+searchedInv ) ;
 											//確認したスロットが空気だった場合に次スロットへ移動
 											if(searchedInv == 35){
 												searchedInv = 0 ;
@@ -259,7 +258,6 @@ public class PlayerRightClickListener implements Listener  {
 											offhandCheck.setAmount(1);
 
 											if(!(ItemInInvCheck.equals(offhandCheck))){
-												player.sendMessage(ChatColor.RED + "詳細不一致："+searchedInv ) ;
 												if(searchedInv == 35){
 													searchedInv = 0 ;
 												}else if(searchedInv == 8 ){
@@ -298,7 +296,6 @@ public class PlayerRightClickListener implements Listener  {
 											}
 										}else {
 											//確認したスロットが違うアイテムだった場合に、次のスロットへと対象を移す
-											player.sendMessage(ChatColor.RED + "スロット別物："+searchedInv ) ;
 											if(searchedInv == 35){
 												searchedInv = 0 ;
 											}else if(searchedInv == 8 ){
@@ -316,7 +313,6 @@ public class PlayerRightClickListener implements Listener  {
 							}
 
 							setblockX ++ ;
-							player.sendMessage(ChatColor.RED + "" + setblockX ) ;
 
 							if(setblockX > playerlocx + AREAint){
 								setblockX = setblockX - AREAintB ;
@@ -325,6 +321,7 @@ public class PlayerRightClickListener implements Listener  {
 							}
 						}
 					}
+					player.sendMessage(ChatColor.RED + "敷き詰めスキル：処理終了" ) ;
 					return;
 
 

@@ -124,14 +124,96 @@ public class PlayerInventoryListener implements Listener {
 				if(playerdata.ZoneSetSkillFlag == false){
 					playerdata.ZoneSetSkillFlag = true ;
 					player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
-					player.closeInventory();
+					player.openInventory(MenuInventoryData.getMenuData(player));
 				}else if (playerdata.ZoneSetSkillFlag == true ){
 					playerdata.ZoneSetSkillFlag = false ;
 					player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
-					player.closeInventory();
+					player.openInventory(MenuInventoryData.getMenuData(player));
 				}
+			} else if (itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
+				//ホームメニューへ帰還
+				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
+				player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
 			}
 		}
+		//インベントリ名が以下の時処理
+		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面")){
+			event.setCancelled(true);
+
+			//プレイヤーインベントリのクリックの場合終了
+			if(event.getClickedInventory().getType().equals(InventoryType.PLAYER)){
+				return;
+			}
+			/*
+			 * クリックしたボタンに応じた各処理内容の記述ここから
+			 */
+
+			if(itemstackcurrent.getType().equals(Material.BARRIER)){
+				//ホームメニューへ帰還
+				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
+				player.openInventory(MenuInventoryData.getMenuData(player));
+
+			}else if(itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
+				if(itemstackcurrent.getAmount() == 11){
+					//範囲MAX
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					playerdata.AREAint = 5;
+					player.sendMessage(ChatColor.RED + "現在の範囲設定は"+(playerdata.AREAint *2 +1)+"×"+ (playerdata.AREAint *2 +1)+"です");
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+
+				}else if(itemstackcurrent.getAmount() == 7){
+					//範囲++
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					if(playerdata.AREAint == 5){
+						player.sendMessage(ChatColor.RED + "[範囲スキル設定]これ以上範囲を広くできません！" ) ;
+					}else {
+						playerdata.AREAint ++ ;
+					}
+					player.sendMessage(ChatColor.RED + "現在の範囲設定は"+(playerdata.AREAint *2 +1)+"×"+ (playerdata.AREAint *2 +1)+"です");
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+
+				}else if(itemstackcurrent.getAmount() == 5){
+					//範囲初期化
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					playerdata.AREAint = 2;
+					player.sendMessage(ChatColor.RED + "現在の範囲設定は"+(playerdata.AREAint *2 +1)+"×"+ (playerdata.AREAint *2 +1)+"です");
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+
+				}else if(itemstackcurrent.getAmount() == 3){
+					//範囲--
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					if(playerdata.AREAint == 1){
+						player.sendMessage(ChatColor.RED + "[範囲スキル設定]これ以上範囲を狭くできません！" ) ;
+					}else {
+						playerdata.AREAint -- ;
+					}
+					player.sendMessage(ChatColor.RED + "現在の範囲設定は"+(playerdata.AREAint *2 +1)+"×"+ (playerdata.AREAint *2 +1)+"です");
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+
+				}else if(itemstackcurrent.getAmount() == 1){
+					//範囲MIN
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					playerdata.AREAint = 1;
+					player.sendMessage(ChatColor.RED + "現在の範囲設定は"+(playerdata.AREAint *2 +1)+"×"+ (playerdata.AREAint *2 +1)+"です");
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}
+			} else if (itemstackcurrent.getType().equals(Material.STONE)){
+				//範囲設置スキル ON/OFF
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				if(playerdata.ZoneSetSkillFlag == false){
+					playerdata.ZoneSetSkillFlag = true ;
+					player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}else if (playerdata.ZoneSetSkillFlag == true ){
+					playerdata.ZoneSetSkillFlag = false ;
+					player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}
+
+			}
+
+		}
+
 	}
 
 
