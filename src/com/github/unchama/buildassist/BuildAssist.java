@@ -74,6 +74,12 @@ public class BuildAssist extends JavaPlugin {
 
 			));
 
+	//ハーフブロックまとめ
+	public static final List<Material> material_slab = new ArrayList<Material>(Arrays.asList(
+			Material.STONE_SLAB2,Material.PURPUR_SLAB,Material.WOOD_STEP,Material.STEP
+
+			));
+
 
 	@Override
 	public void onEnable() {

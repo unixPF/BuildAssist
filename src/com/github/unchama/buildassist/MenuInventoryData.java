@@ -45,6 +45,12 @@ public class MenuInventoryData {
 		}else {
 			FlyTime = String.valueOf(playerdata.flytime);
 		}
+		String ZSSkill ;
+		if(playerdata.ZoneSetSkillFlag){
+			ZSSkill = "ON" ;
+		}else {
+			ZSSkill = "OFF" ;
+		}
 
 
 //		int prank = Util.calcPlayerRank(player);
@@ -127,7 +133,150 @@ public class MenuInventoryData {
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(6,itemstack);
 
+		//範囲設置スキル ON/OFFボタン
+		itemstack = new ItemStack(Material.STONE,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+		itemmeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "「範囲設置スキル」現在：" + ZSSkill );
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "「スニーク+左クリック」をすると、"
+				, ChatColor.RESET + "" + ChatColor.YELLOW + "オフハンドに持っているブロックと同じ物を"
+				, ChatColor.RESET + "" + ChatColor.YELLOW  + "インベントリ内から消費し設置します。"
+				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "＜クリックでON/OFF切り替え＞");
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(20,itemstack);
+
+
+		//範囲設置スキル 設定画面移動
+		itemstack = new ItemStack(Material.SKULL_ITEM,1);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面へ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動");
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_Exclamation");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(21,itemstack);
+
+
 		return inventory;
 
+	}
+
+
+	public static Inventory getSetBlockSkillData(Player p){
+		//プレイヤーを取得
+		Player player = p.getPlayer();
+		//UUID取得
+		UUID uuid = player.getUniqueId();
+		//プレイヤーデータ
+		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+
+		Inventory inventory = Bukkit.getServer().createInventory(null,4*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面");
+		ItemStack itemstack;
+		ItemMeta itemmeta;
+		SkullMeta skullmeta;
+		List<String> lore = new ArrayList<String>();
+
+		String ZSSkill ;
+		if(playerdata.ZoneSetSkillFlag){
+			ZSSkill = "ON" ;
+		}else {
+			ZSSkill = "OFF" ;
+		}
+
+		int ZSSkillA =(playerdata.AREAint) * 2 + 1;
+
+
+
+		//初期画面へ移動
+		itemstack = new ItemStack(Material.BARRIER,1);
+		itemmeta =Bukkit.getItemFactory().getItemMeta(Material.BARRIER);
+		itemstack.setDurability((short) 3);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "元のページへ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動");
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(0,itemstack);
+
+
+		//設定状況の表示
+		itemstack = new ItemStack(Material.STONE,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "現在の設定は以下の通りです");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "スキルの使用設定：" + ZSSkill
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "スキルの範囲設定：" + ZSSkillA + "×" + ZSSkillA);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(13,itemstack);
+
+
+		//範囲をMAXへ
+		itemstack = new ItemStack(Material.SKULL_ITEM,11);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.RED + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "範囲設定を最大値に変更");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + "現在の範囲設定：" + ZSSkillA + "×" + ZSSkillA
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "変更後の範囲設定：11×11");
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowUp");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(19,itemstack);
+
+
+		//範囲を一段階増加
+		itemstack = new ItemStack(Material.SKULL_ITEM,7);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "範囲設定を一段階大きくする");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + "現在の範囲設定：" + ZSSkillA + "×" + ZSSkillA
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "変更後の範囲設定："+ (ZSSkillA + 2) +"×"+(ZSSkillA + 2)
+							,ChatColor.RESET + "" +  ChatColor.RED + "" + "※範囲設定の最大値は11×11※");
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowUp");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(20,itemstack);
+
+
+		//範囲を初期値へ
+		itemstack = new ItemStack(Material.SKULL_ITEM,5);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.RED + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "範囲設定を初期値に変更");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + "現在の範囲設定：" + ZSSkillA + "×" + ZSSkillA
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "変更後の範囲設定：5×5");
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_TNT");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(22,itemstack);
+
+
+		//範囲を一段階減少
+		itemstack = new ItemStack(Material.SKULL_ITEM,3);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "範囲設定を一段階小さくする");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + "現在の範囲設定：" + ZSSkillA + "×" + ZSSkillA
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "変更後の範囲設定："+ (ZSSkillA - 2) +"×"+(ZSSkillA - 2)
+							,ChatColor.RESET + "" +  ChatColor.RED + "" + "※範囲設定の最小値は3×3※");
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowDown");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(24,itemstack);
+
+
+		//範囲をMINへ
+		itemstack = new ItemStack(Material.SKULL_ITEM,1);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.RED + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "範囲設定を最小値に変更");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + "現在の範囲設定：" + ZSSkillA + "×" + ZSSkillA
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "変更後の範囲設定：3×3");
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowDown");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(25,itemstack);
+
+
+		return inventory;
 	}
 }
