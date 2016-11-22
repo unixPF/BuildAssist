@@ -98,6 +98,7 @@ public class BuildAssist extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EntityListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerRightClickListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInventoryListener(), this);
+		getServer().getPluginManager().registerEvents(new BlockLineUp(), this);		//クリックイベント登録
 
 		for (Player p : getServer().getOnlinePlayers()) {
 			UUID uuid = p.getUniqueId();
