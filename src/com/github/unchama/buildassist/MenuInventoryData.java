@@ -158,6 +158,33 @@ public class MenuInventoryData {
 		inventory.setItem(21,itemstack);
 
 
+		//homeに移動
+		itemstack = new ItemStack(Material.COMPASS,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.COMPASS);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "サブホームポイントにワープ");
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "あらかじめ設定した"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "サブホームポイントにワープします"
+				, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "うまく機能しない時は"
+				, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "再接続してみてください"
+				, ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックでワープ"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(27,itemstack);
+		
+		//ｈome設定
+		itemstack = new ItemStack(Material.BED,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.BED);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "サブホームポイントを設定");
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "現在位置をサブホームポイント"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "として設定します"
+				, ChatColor.RESET + "" + ChatColor.	DARK_GRAY + "※上書きされます"
+				, ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで設定"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(28,itemstack);
+		
 		return inventory;
 
 	}

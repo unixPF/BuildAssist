@@ -81,6 +81,14 @@ public class BuildAssist extends JavaPlugin {
 			));
 
 
+	//設置ブロックの対象リスト
+	public static final List<Material> materiallist2 = new ArrayList<Material>(Arrays.asList(
+			Material.STONE	//石
+
+
+			));
+	
+	
 	@Override
 	public void onEnable() {
 		plugin = this;

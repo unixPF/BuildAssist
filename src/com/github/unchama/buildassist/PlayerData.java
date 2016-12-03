@@ -4,6 +4,7 @@ package com.github.unchama.buildassist;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
+import org.bukkit.Location;
 
 public class PlayerData {
 	public String name;
@@ -17,8 +18,9 @@ public class PlayerData {
 	public boolean Endlessfly ;
 	public boolean ZoneSetSkillFlag ;
 	public int AREAint ;
-
-
+	
+	public Location sub_home ;//サブのホームポイント
+	
 
 
 
@@ -34,7 +36,7 @@ public class PlayerData {
 			Endlessfly = false;
 			ZoneSetSkillFlag = false;
 			AREAint = 2;
-
+			sub_home = null;
 
 
 
