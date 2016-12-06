@@ -4,6 +4,7 @@ package com.github.unchama.buildassist;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
+import org.bukkit.Location;
 
 public class PlayerData {
 	public String name;
@@ -17,8 +18,11 @@ public class PlayerData {
 	public boolean Endlessfly ;
 	public boolean ZoneSetSkillFlag ;
 	public int AREAint ;
-
-
+	
+	//ブロックを並べるスキル設定フラグ
+	public int line_up_flg;
+	public int line_up_step_flg;
+	
 
 
 
@@ -34,7 +38,9 @@ public class PlayerData {
 			Endlessfly = false;
 			ZoneSetSkillFlag = false;
 			AREAint = 2;
-
+			
+			line_up_flg = 0;
+			line_up_step_flg = 0;
 
 
 
