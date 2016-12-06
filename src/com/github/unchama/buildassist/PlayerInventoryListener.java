@@ -138,24 +138,30 @@ public class PlayerInventoryListener implements Listener {
 				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
 				player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
 				
-			} else if (itemstackcurrent.getType().equals(Material.COMPASS)){
-				//サブホームに移動
-				if(playerdata.sub_home != null){
-					World world = Bukkit.getWorld(playerdata.sub_home.getWorld().getName());
-					if(world != null){
-						player.teleport(playerdata.sub_home);
-						player.sendMessage("サブホームポイントにワープしました");
-					}else{
-						player.sendMessage("サブホームポイントが設定されてません");
-					}
+			} else if (itemstackcurrent.getType().equals(Material.WOOD)){
+				//ブロックを並べるスキル設定
+				if(playerdata.level < BuildAssist.config.getblocklineuplevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
 				}else{
-					player.sendMessage("サブホームポイントが設定されてません");
-				}
-			} else if (itemstackcurrent.getType().equals(Material.BED)){
-				//ホームをセット
-				playerdata.sub_home = player.getLocation();
-				player.sendMessage("現在位置をサブホームポイントに設定しました");
 
+					if ( playerdata.line_up_flg >= 2 ){
+						playerdata.line_up_flg = 0;
+					}else{
+						playerdata.line_up_flg++;
+					}
+					player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
+					player.openInventory(MenuInventoryData.getMenuData(player));
+				}
+				
+			} else if (itemstackcurrent.getType().equals(Material.STEP)){
+				//ブロックを並べるスキルハーフブロック設定
+				if ( playerdata.line_up_step_flg >= 2 ){
+					playerdata.line_up_step_flg = 0;
+				}else{
+					playerdata.line_up_step_flg++;
+				}
+				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
+				player.openInventory(MenuInventoryData.getMenuData(player));
 			}
 			
 			

@@ -19,7 +19,9 @@ public class PlayerData {
 	public boolean ZoneSetSkillFlag ;
 	public int AREAint ;
 	
-	public Location sub_home ;//サブのホームポイント
+	//ブロックを並べるスキル設定フラグ
+	public int line_up_flg;
+	public int line_up_step_flg;
 	
 
 
@@ -36,7 +38,9 @@ public class PlayerData {
 			Endlessfly = false;
 			ZoneSetSkillFlag = false;
 			AREAint = 2;
-			sub_home = null;
+			
+			line_up_flg = 0;
+			line_up_step_flg = 0;
 
 
 

@@ -18,6 +18,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class MenuInventoryData {
 
+	
 	public static Inventory getMenuData(Player p){
 		//プレイヤーを取得
 		Player player = p.getPlayer();
@@ -158,28 +159,26 @@ public class MenuInventoryData {
 		inventory.setItem(21,itemstack);
 
 
-		//homeに移動
-		itemstack = new ItemStack(Material.COMPASS,1);
-		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.COMPASS);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "サブホームポイントにワープ");
-		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "あらかじめ設定した"
-				, ChatColor.RESET + "" + ChatColor.GRAY + "サブホームポイントにワープします"
-				, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "うまく機能しない時は"
-				, ChatColor.RESET + "" + ChatColor.DARK_GRAY + "再接続してみてください"
-				, ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックでワープ"
+		//ブロックを並べるスキル設定
+		itemstack = new ItemStack(Material.WOOD,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.WOOD);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "オフハンドに木の棒、メインハンドにブロックを持ってる状態で"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "左クリックするとメインハンドのブロックを向いてる方向に並べて設置します。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getblocklineuplevel() + "以上で利用可能"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "※スキル発動時にマナを消費します。 最大消費マナ："+(BuildAssist.config.getblocklineupmana_mag()*64)
 				);
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(27,itemstack);
 		
-		//ｈome設定
-		itemstack = new ItemStack(Material.BED,1);
-		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.BED);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "サブホームポイントを設定");
-		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "現在位置をサブホームポイント"
-				, ChatColor.RESET + "" + ChatColor.GRAY + "として設定します"
-				, ChatColor.RESET + "" + ChatColor.	DARK_GRAY + "※上書きされます"
-				, ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで設定"
+		//ブロックを並べるスキルハーフブロック設定
+		itemstack = new ItemStack(Material.STEP,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ブロックを並べるスキルでハーフブロックを並べる時の位置を決めます。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
 				);
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
