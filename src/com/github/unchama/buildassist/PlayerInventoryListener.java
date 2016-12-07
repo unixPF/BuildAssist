@@ -5,8 +5,11 @@ import java.util.UUID;
 
 import net.md_5.bungee.api.ChatColor;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -134,7 +137,34 @@ public class PlayerInventoryListener implements Listener {
 				//ホームメニューへ帰還
 				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
 				player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				
+			} else if (itemstackcurrent.getType().equals(Material.WOOD)){
+				//ブロックを並べるスキル設定
+				if(playerdata.level < BuildAssist.config.getblocklineuplevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+
+					if ( playerdata.line_up_flg >= 2 ){
+						playerdata.line_up_flg = 0;
+					}else{
+						playerdata.line_up_flg++;
+					}
+					player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
+					player.openInventory(MenuInventoryData.getMenuData(player));
+				}
+				
+			} else if (itemstackcurrent.getType().equals(Material.STEP)){
+				//ブロックを並べるスキルハーフブロック設定
+				if ( playerdata.line_up_step_flg >= 2 ){
+					playerdata.line_up_step_flg = 0;
+				}else{
+					playerdata.line_up_step_flg++;
+				}
+				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
+				player.openInventory(MenuInventoryData.getMenuData(player));
 			}
+			
+			
 		}
 		//インベントリ名が以下の時処理
 		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面")){

@@ -4,6 +4,7 @@ package com.github.unchama.buildassist;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import com.github.unchama.seichiassist.SeichiAssist;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 public class Util {
@@ -44,5 +45,27 @@ public static WorldGuardPlugin getWorldGuard() {
     }
 
     return (WorldGuardPlugin) plugin;
+}
+
+//スキルの発動可否の処理(発動可能ならtrue、発動不可ならfalse)
+public static boolean isSkillEnable(Player player){
+	//デバッグモード時は全ワールドでスキル使用を許可する(DEBUGWORLDNAME = worldの場合)
+	String worldname = SeichiAssist.SEICHIWORLDNAME;
+	if(SeichiAssist.DEBUG){
+		worldname = SeichiAssist.DEBUGWORLDNAME;
+	}
+	//プレイヤーの場所が各種整地ワールド(world_SWで始まるワールド)または各種メインワールド(world)または各種TTワールドにいる場合
+	if(player.getWorld().getName().toLowerCase().startsWith(worldname)
+			|| player.getWorld().getName().equalsIgnoreCase("world")
+			|| player.getWorld().getName().equalsIgnoreCase("world_nether")
+			|| player.getWorld().getName().equalsIgnoreCase("world_the_end")
+			|| player.getWorld().getName().equalsIgnoreCase("world_TT")
+			|| player.getWorld().getName().equalsIgnoreCase("world_nether_TT")
+			|| player.getWorld().getName().equalsIgnoreCase("world_the_end_TT")
+			){
+		return true;
+	}
+	//それ以外のワールドの場合
+	return false;
 }
 }
