@@ -2,6 +2,8 @@ package com.github.unchama.buildassist;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.github.unchama.seichiassist.util.Util;
+
 public class Config{
 	private static FileConfiguration config;
 	private BuildAssist plugin;
@@ -57,4 +59,11 @@ public class Config{
 	}
 */
 
+	
+	public int getblocklineuplevel() {
+		return Util.toInt(config.getString("blocklineup.level"));
+	}
+	public double getblocklineupmana_mag() {
+		return Util.toDouble(config.getString("blocklineup.mana_mag"));
+	}
 }
