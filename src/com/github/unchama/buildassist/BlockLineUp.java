@@ -121,7 +121,7 @@ public class BlockLineUp implements Listener{
 						step_x = 1;
 					}				
 				}
-				double mana_mag = 0.8;
+				double mana_mag = BuildAssist.config.getblocklineupmana_mag();
 				int v = 0;
 				int max = mainhanditem.getAmount();//メインハンドのアイテム数を最大値に
 				
