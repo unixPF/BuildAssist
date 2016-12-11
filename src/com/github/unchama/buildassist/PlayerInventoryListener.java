@@ -150,6 +150,7 @@ public class PlayerInventoryListener implements Listener {
 						playerdata.line_up_flg++;
 					}
 					player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					player.openInventory(MenuInventoryData.getMenuData(player));
 				}
 				
@@ -161,9 +162,22 @@ public class PlayerInventoryListener implements Listener {
 					playerdata.line_up_step_flg++;
 				}
 				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				player.openInventory(MenuInventoryData.getMenuData(player));
+			} else if (itemstackcurrent.getType().equals(Material.TNT)){
+				//ブロックを並べるスキル一部ブロックを破壊して並べる設定
+				playerdata.line_up_des_flg ^= 1;
+				/*
+				if ( playerdata.line_up_des_flg == 1 ){
+					playerdata.line_up_des_flg = 0;
+				}else{
+					playerdata.line_up_des_flg = 1;
+				}
+				*/
+				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）破壊設定 ：" + BuildAssist.line_up_des_str[playerdata.line_up_des_flg] ) ;
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 				player.openInventory(MenuInventoryData.getMenuData(player));
 			}
-			
 			
 		}
 		//インベントリ名が以下の時処理

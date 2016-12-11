@@ -22,6 +22,7 @@ public class PlayerData {
 	//ブロックを並べるスキル設定フラグ
 	public int line_up_flg;
 	public int line_up_step_flg;
+	public int line_up_des_flg;
 	
 
 
@@ -41,7 +42,7 @@ public class PlayerData {
 			
 			line_up_flg = 0;
 			line_up_step_flg = 0;
-
+			line_up_des_flg = 0;
 
 
 		}

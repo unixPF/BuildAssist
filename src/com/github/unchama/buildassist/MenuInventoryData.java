@@ -184,6 +184,17 @@ public class MenuInventoryData {
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(28,itemstack);
 		
+		//ブロックを並べるスキル一部ブロックを破壊して並べる設定
+		itemstack = new ItemStack(Material.TNT,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.TNT);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮）破壊設定 ：" + BuildAssist.line_up_des_str[playerdata.line_up_des_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ブロックを並べるスキルでブロックを並べるとき一部ブロックを破壊して並べます。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "破壊対象ブロック：草,花,水,雪,松明,きのこ"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(29,itemstack);
 		return inventory;
 
 	}

@@ -1,5 +1,6 @@
 package com.github.unchama.buildassist;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -121,7 +122,7 @@ public class BlockLineUp implements Listener{
 						step_x = 1;
 					}				
 				}
-				double mana_mag = 0.8;
+				double mana_mag = BuildAssist.config.getblocklineupmana_mag();
 				int v = 0;
 				int max = mainhanditem.getAmount();//メインハンドのアイテム数を最大値に
 				
@@ -160,7 +161,16 @@ public class BlockLineUp implements Listener{
 					
 					//空気以外にぶつかったら設置終わり
 					if (b.getType() != Material.AIR){
-						break;
+//						player.sendMessage(":"+b.getType().toString());
+						if(BuildAssist.material_destruction.contains(b.getType()) == false || playerdata.line_up_des_flg == 0){
+//							player.sendMessage("stop:"+b.getType().toString());
+							break;
+						}
+						Collection<ItemStack> i = b.getDrops();
+						
+						if(i.iterator().hasNext() == true){
+							b.getLocation().getWorld().dropItemNaturally(pl, i.iterator().next());
+						}
 					}
 					
 					//他人の保護がかかっている場合は設置終わり
