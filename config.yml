@@ -1,6 +1,9 @@
-flyexp: '100'
+flyexp: '50'
 #
 #ブロックを並べるスキル
 blocklineup:
   level: '15'
   mana_mag: '1.0'
+
+ZoneSetSkill;
+  level: '15'

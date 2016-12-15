@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.material.MaterialData;
 
 public class PlayerRightClickListener implements Listener  {
 	HashMap<UUID, PlayerData> playermap = BuildAssist.playermap;
@@ -64,21 +63,6 @@ public class PlayerRightClickListener implements Listener  {
 				//オフハンドにブロックがあるか
 				boolean offhandtoolflag = BuildAssist.materiallist.contains(offhanditem.getType());
 
-				//オフハンドのハンブロック検知処理
-				boolean offhandslabflag = BuildAssist.material_slab.contains(offhanditem.getType());
-
-
-				String SlabType = null ;
-
-
-				//半ブロック種類別データ一次保管
-				if(offhandslabflag){
-					if(offhanditem.getType() == Material.WOOD_STEP){
-						SlabType = "wood" ;
-					}else if(offhanditem.getType() == Material.STEP){
-						SlabType = "stone";
-					}
-				}
 
 				//場合分け
 				if(offhandtoolflag){
@@ -125,10 +109,6 @@ public class PlayerRightClickListener implements Listener  {
 					int searchY = playerlocy - 4 ;
 					int searchZ = playerlocz - SEARCHint ;
 
-					MaterialData s = null ;
-					MaterialData ws = null ;
-
-
 
 					//同上(Y座標記録)
 					int Y1 = 256 ;
@@ -142,16 +122,8 @@ public class PlayerRightClickListener implements Listener  {
 					for(;searchY < playerlocy + 2 ;){
 						BlockState block = player.getWorld().getBlockAt(searchX,searchY,searchZ).getState();
 
-						if(offhanditem.getType() == player.getWorld().getBlockAt(searchX,searchY,searchZ).getType()){
-
-							if(offhandslabflag){
-								if(SlabType == "stone"){
-									s = block.getData();
-
-								}else if(SlabType == "wood"){
-									ws = block.getData();
-								}
-							}
+						if(offhanditem.getType() == player.getWorld().getBlockAt(searchX,searchY,searchZ).getType()&&
+							offhanditem.getData().getData() == player.getWorld().getBlockAt(searchX,searchY,searchZ).getData()){
 
 							if(Y1 == searchY || Y1 == 256){
 								Y1 = searchY ;
@@ -206,27 +178,35 @@ public class PlayerRightClickListener implements Listener  {
 						for(;setblockZ < playerlocz + SEARCHint ;){
 							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR ){
 								setunder = 1;
-								if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR){
-									for(;player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR;){
+								for(;setunder < 5;){
+									//設置対象の[setunder]分の下のブロックが空気かどうか
+									if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.LAVA||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.STATIONARY_LAVA||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.WATER||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.STATIONARY_WATER){
+										WGloc.setX(setblockX);
+										WGloc.setY(setblockY - setunder);
+										WGloc.setZ(setblockZ);
 										//他人の保護がかかっている場合は処理を終了
-										WGloc.add(setblockX ,(setblockY - setunder) , setblockZ);
 										if(!Util.getWorldGuard().canBuild(player, WGloc)){
-											setunder ++ ;
+											player.sendMessage(ChatColor.RED + "付近に誰かの保護がかかっているようです" ) ;
 										}else {
-											//設置対象座標の下も空気だった場合、土を設置する
-											player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).setType(Material.DIRT);
-											setunder ++ ;
-										}
-
-										if(setunder > 3){
-											break;
+											//保護のない場合、土を設置する処理
+												player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).setType(Material.DIRT);
 										}
 									}
+									setunder ++;
+
 								}
 
 								//他人の保護がかかっている場合は処理を終了
-								WGloc.add(setblockX ,setblockY , setblockZ);
+								WGloc.setX(setblockX);
+								WGloc.setY(setblockY);
+								WGloc.setZ(setblockZ);
 								if(!Util.getWorldGuard().canBuild(player, WGloc)){
+									player.sendMessage(ChatColor.RED + "付近に誰かの保護がかかっているようです" ) ;
+									break;
 								}else {
 
 								//インベントリの左上から一つずつ確認する。
@@ -277,22 +257,10 @@ public class PlayerRightClickListener implements Listener  {
 												player.getInventory().setItem(searchedInv, ItemInInv);
 												//ブロックを設置する
 												player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).setType(offhanditem.getType());
+												player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).setData(offhanditem.getData().getData());
 
 												break;
 
-												/*
-												if(offhandslabflag){
-													player.sendMessage(ChatColor.RED + "SLABですってよ奥さん" ) ;
-													if(SlabType == "stone"){
-														player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getState().setData(s);
-														player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getState().update();
-													}else if(SlabType == "wood"){
-														player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getState().setData(ws);
-														player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getState().update();
-													}
-
-												}
-												*/
 											}
 										}else {
 											//確認したスロットが違うアイテムだった場合に、次のスロットへと対象を移す

@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class MenuInventoryData {
 
-	
+
 	public static Inventory getMenuData(Player p){
 		//プレイヤーを取得
 		Player player = p.getPlayer();
@@ -46,6 +46,7 @@ public class MenuInventoryData {
 		}else {
 			FlyTime = String.valueOf(playerdata.flytime);
 		}
+
 		String ZSSkill ;
 		if(playerdata.ZoneSetSkillFlag){
 			ZSSkill = "ON" ;
@@ -141,7 +142,8 @@ public class MenuInventoryData {
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "「スニーク+左クリック」をすると、"
 				, ChatColor.RESET + "" + ChatColor.YELLOW + "オフハンドに持っているブロックと同じ物を"
 				, ChatColor.RESET + "" + ChatColor.YELLOW  + "インベントリ内から消費し設置します。"
-				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "＜クリックでON/OFF切り替え＞");
+				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "＜クリックでON/OFF切り替え＞"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getZoneSetSkillLevel() + "以上で利用可能");
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(20,itemstack);
@@ -172,7 +174,7 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(27,itemstack);
-		
+
 		//ブロックを並べるスキルハーフブロック設定
 		itemstack = new ItemStack(Material.STEP,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
@@ -183,7 +185,7 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(28,itemstack);
-		
+
 		//ブロックを並べるスキル一部ブロックを破壊して並べる設定
 		itemstack = new ItemStack(Material.TNT,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.TNT);

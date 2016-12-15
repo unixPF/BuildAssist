@@ -59,11 +59,15 @@ public class Config{
 	}
 */
 
-	
+
 	public int getblocklineuplevel() {
 		return Util.toInt(config.getString("blocklineup.level"));
 	}
 	public double getblocklineupmana_mag() {
 		return Util.toDouble(config.getString("blocklineup.mana_mag"));
+	}
+
+	public int getZoneSetSkillLevel(){
+		return Util.toInt(config.getString("ZoneSetSkill.level"));
 	}
 }
