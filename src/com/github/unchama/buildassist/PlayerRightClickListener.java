@@ -178,24 +178,26 @@ public class PlayerRightClickListener implements Listener  {
 						for(;setblockZ < playerlocz + SEARCHint ;){
 							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR ){
 								setunder = 1;
-								if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR){
-									for(;setunder < 5;){
-										//設置対象の[setunder]分の下のブロックが空気かどうか
-										if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR){
-											WGloc.setX(setblockX);
-											WGloc.setY(setblockY - setunder);
-											WGloc.setZ(setblockZ);
-											//他人の保護がかかっている場合は処理を終了
-											if(!Util.getWorldGuard().canBuild(player, WGloc)){
-												player.sendMessage(ChatColor.RED + "付近に誰かの保護がかかっているようです" ) ;
-											}else {
-												//保護のない場合、土を設置する処理
+								for(;setunder < 5;){
+									//設置対象の[setunder]分の下のブロックが空気かどうか
+									if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.LAVA||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.STATIONARY_LAVA||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.WATER||
+										player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.STATIONARY_WATER){
+										WGloc.setX(setblockX);
+										WGloc.setY(setblockY - setunder);
+										WGloc.setZ(setblockZ);
+										//他人の保護がかかっている場合は処理を終了
+										if(!Util.getWorldGuard().canBuild(player, WGloc)){
+											player.sendMessage(ChatColor.RED + "付近に誰かの保護がかかっているようです" ) ;
+										}else {
+											//保護のない場合、土を設置する処理
 												player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).setType(Material.DIRT);
-											}
 										}
-										setunder ++;
-
 									}
+									setunder ++;
+
 								}
 
 								//他人の保護がかかっている場合は処理を終了

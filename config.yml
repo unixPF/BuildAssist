@@ -4,3 +4,6 @@ flyexp: '50'
 blocklineup:
   level: '15'
   mana_mag: '1.0'
+
+ZoneSetSkill;
+  level: '15'
