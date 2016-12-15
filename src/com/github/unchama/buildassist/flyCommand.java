@@ -48,7 +48,7 @@ public class flyCommand implements TabExecutor {
 			sender.sendMessage(ChatColor.GREEN
 					+ "FLY機能を利用したい場合は、末尾に「利用したい時間(分単位)」の数値を、");
 			sender.sendMessage(ChatColor.GREEN
-					+ "FLY機能を中断したい場合は、末尾に「stop」を記入してください。");
+					+ "FLY機能を中断したい場合は、末尾に「finish」を記入してください。");
 			return true;
 		}
 		if (args.length == 1) {
