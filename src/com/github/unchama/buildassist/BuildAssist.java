@@ -81,6 +81,109 @@ public class BuildAssist extends JavaPlugin {
 			));
 
 
+	//設置ブロックの対象リスト
+	public static final List<Material> materiallist2 = new ArrayList<Material>(Arrays.asList(
+			Material.STONE//石
+			,Material.GRASS//草
+			,Material.DIRT//土
+			,Material.COBBLESTONE//丸石
+			,Material.WOOD//木
+			,Material.SAND//砂
+			,Material.GRAVEL//砂利
+			,Material.GOLD_ORE//金鉱石
+			,Material.IRON_ORE//鉄鉱石
+			,Material.COAL_ORE//石炭鉱石
+			,Material.LOG//原木
+			,Material.GLASS//ガラス
+			,Material.LAPIS_ORE//ラピス鉱石
+			,Material.LAPIS_BLOCK//ラピスB
+			,Material.SANDSTONE//砂岩
+			,Material.WOOL//羊毛
+			,Material.GOLD_BLOCK//金B
+			,Material.IRON_BLOCK//鉄B
+			,Material.BRICK//レンガB
+			,Material.BOOKSHELF//本棚
+			,Material.MOSSY_COBBLESTONE//苔石
+			,Material.OBSIDIAN//黒曜石
+			,Material.DIAMOND_ORE//ダイヤ鉱石
+			,Material.DIAMOND_BLOCK//ダイヤB
+			,Material.REDSTONE_ORE//赤鉱石
+			,Material.ICE//氷
+			,Material.SNOW_BLOCK//雪B
+			,Material.CLAY//粘土B
+			,Material.NETHERRACK//ネザーラック
+			,Material.SOUL_SAND//ソウルサンド
+			,Material.GLOWSTONE//グロウストーン
+			,Material.STAINED_GLASS//色付きガラス
+			,Material.SMOOTH_BRICK//石レンガ
+			,Material.MYCEL//菌糸
+			,Material.NETHER_BRICK//ネザーレンガ
+			,Material.ENDER_STONE//エンドストーン
+			,Material.EMERALD_ORE//エメ鉱石
+			,Material.EMERALD_BLOCK//エメB
+			,Material.COBBLE_WALL//丸石の壁
+			,Material.QUARTZ_ORE//水晶鉱石
+			,Material.QUARTZ_BLOCK//水晶B
+			,Material.STAINED_CLAY//色付き固焼き粘土
+			,Material.LOG_2//原木2
+			,Material.PRISMARINE//プリズマリン
+			,Material.SEA_LANTERN//シーランタン
+			,Material.HARD_CLAY//固焼き粘土
+			,Material.COAL_BLOCK//石炭B
+			,Material.PACKED_ICE//氷塊
+			,Material.RED_SANDSTONE//赤い砂岩
+			,Material.PURPUR_BLOCK//プルパーブ
+			,Material.PURPUR_PILLAR//柱状プルパーブ
+			,Material.END_BRICKS//エンドレンガB
+			,Material.RED_NETHER_BRICK//赤ネザーレンガB
+			,Material.BONE_BLOCK//骨B
+			
+//			,Material.LEAVES//葉		設置した葉が時間経過で消えるので除外
+			,Material.FENCE//オークフェンス
+			,Material.IRON_FENCE//鉄フェンス
+			,Material.THIN_GLASS//板ガラス
+			,Material.NETHER_FENCE//ネザーフェンス
+			,Material.STAINED_GLASS_PANE//色付き板ガラス
+			,Material.LEAVES_2//葉2
+			,Material.SLIME_BLOCK//スライムB
+//			,Material.CARPET//カーペット
+			,Material.SPRUCE_FENCE//松フェンス
+			,Material.BIRCH_FENCE//白樺フェンス
+			,Material.JUNGLE_FENCE//ジャングルフェンス
+			,Material.DARK_OAK_FENCE//ダークオークフェンス
+			,Material.ACACIA_FENCE//アカシアフェンス
+//			,Material.RAILS//レール
+
+			));
+	
+	public static final List<Material> material_slab2 = new ArrayList<Material>(Arrays.asList(
+			Material.STONE_SLAB2	//赤砂岩
+			,Material.PURPUR_SLAB	//プルパー
+			,Material.WOOD_STEP		//木
+			,Material.STEP			//石
+
+			));
+
+	public static final List<Material> material_destruction = new ArrayList<Material>(Arrays.asList(
+			Material.LONG_GRASS			//草
+			,Material.DEAD_BUSH			//枯れ木
+			,Material.YELLOW_FLOWER		//タンポポ
+			,Material.RED_ROSE			//花9種
+			,Material.BROWN_MUSHROOM	//きのこ
+			,Material.RED_MUSHROOM		//赤きのこ
+			,Material.TORCH				//松明
+			,Material.SNOW				//雪
+			,Material.DOUBLE_PLANT		//高い花、草
+			,Material.WATER				//水
+			,Material.STATIONARY_WATER	//水
+
+			));
+
+	public static String[] line_up_str = {"OFF","上側","下側"}; 
+	public static String[] line_up_step_str = {"上側","下側","両方"}; 
+	public static String[] line_up_des_str = {"OFF","ON"}; 
+
+	
 	@Override
 	public void onEnable() {
 		plugin = this;
@@ -98,6 +201,7 @@ public class BuildAssist extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EntityListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerRightClickListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInventoryListener(), this);
+		getServer().getPluginManager().registerEvents(new BlockLineUp(), this);		//クリックイベント登録
 
 		for (Player p : getServer().getOnlinePlayers()) {
 			UUID uuid = p.getUniqueId();
