@@ -176,7 +176,8 @@ public class PlayerRightClickListener implements Listener  {
 
 
 						for(;setblockZ < playerlocz + SEARCHint ;){
-							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR ){
+							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.SNOW){
 								setunder = 1;
 								for(;setunder < 5;){
 									//設置対象の[setunder]分の下のブロックが空気かどうか

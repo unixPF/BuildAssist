@@ -146,7 +146,7 @@ public class MenuInventoryData {
 				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getZoneSetSkillLevel() + "以上で利用可能");
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(20,itemstack);
+		inventory.setItem(18,itemstack);
 
 
 		//範囲設置スキル 設定画面移動
@@ -158,7 +158,7 @@ public class MenuInventoryData {
 		skullmeta.setLore(lore);
 		skullmeta.setOwner("MHF_Exclamation");
 		itemstack.setItemMeta(skullmeta);
-		inventory.setItem(21,itemstack);
+		inventory.setItem(19,itemstack);
 
 
 		//ブロックを並べるスキル設定
