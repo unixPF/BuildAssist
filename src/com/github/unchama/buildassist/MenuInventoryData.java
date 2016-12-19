@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class MenuInventoryData {
 
-	
+
 	public static Inventory getMenuData(Player p){
 		//プレイヤーを取得
 		Player player = p.getPlayer();
@@ -46,12 +46,14 @@ public class MenuInventoryData {
 		}else {
 			FlyTime = String.valueOf(playerdata.flytime);
 		}
+
 		String ZSSkill ;
 		if(playerdata.ZoneSetSkillFlag){
 			ZSSkill = "ON" ;
 		}else {
 			ZSSkill = "OFF" ;
 		}
+
 
 
 //		int prank = Util.calcPlayerRank(player);
@@ -141,10 +143,11 @@ public class MenuInventoryData {
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.YELLOW + "「スニーク+左クリック」をすると、"
 				, ChatColor.RESET + "" + ChatColor.YELLOW + "オフハンドに持っているブロックと同じ物を"
 				, ChatColor.RESET + "" + ChatColor.YELLOW  + "インベントリ内から消費し設置します。"
-				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "＜クリックでON/OFF切り替え＞");
+				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "＜クリックでON/OFF切り替え＞"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getZoneSetSkillLevel() + "以上で利用可能");
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(20,itemstack);
+		inventory.setItem(18,itemstack);
 
 
 		//範囲設置スキル 設定画面移動
@@ -156,7 +159,7 @@ public class MenuInventoryData {
 		skullmeta.setLore(lore);
 		skullmeta.setOwner("MHF_Exclamation");
 		itemstack.setItemMeta(skullmeta);
-		inventory.setItem(21,itemstack);
+		inventory.setItem(19,itemstack);
 
 
 		//ブロックを並べるスキル設定
@@ -172,7 +175,7 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(27,itemstack);
-		
+
 		//ブロックを並べるスキルハーフブロック設定
 		itemstack = new ItemStack(Material.STEP,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
@@ -183,7 +186,18 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(28,itemstack);
-		
+
+		//ブロックを並べるスキル一部ブロックを破壊して並べる設定
+		itemstack = new ItemStack(Material.TNT,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.TNT);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮）破壊設定 ：" + BuildAssist.line_up_des_str[playerdata.line_up_des_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ブロックを並べるスキルでブロックを並べるとき一部ブロックを破壊して並べます。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "破壊対象ブロック：草,花,水,雪,松明,きのこ"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(29,itemstack);
 		return inventory;
 
 	}
@@ -210,6 +224,14 @@ public class MenuInventoryData {
 			ZSSkill = "OFF" ;
 		}
 
+
+		String ZSDirt ;
+		if(playerdata.zsSkillDirtFlag){
+			ZSDirt = "ON" ;
+		}else {
+			ZSDirt = "OFF" ;
+		}
+
 		int ZSSkillA =(playerdata.AREAint) * 2 + 1;
 
 
@@ -223,6 +245,17 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(0,itemstack);
+
+
+		//土設置のON/OFF
+		itemstack = new ItemStack(Material.DIRT,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "設置時に下の空洞を埋める機能");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "機能の使用設定：" + ZSDirt
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "機能の範囲：地下5マスまで");
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(4,itemstack);
 
 
 		//設定状況の表示

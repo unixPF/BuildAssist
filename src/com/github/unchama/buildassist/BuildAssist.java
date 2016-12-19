@@ -138,7 +138,7 @@ public class BuildAssist extends JavaPlugin {
 			,Material.RED_NETHER_BRICK//赤ネザーレンガB
 			,Material.BONE_BLOCK//骨B
 			
-			,Material.LEAVES//葉
+//			,Material.LEAVES//葉		設置した葉が時間経過で消えるので除外
 			,Material.FENCE//オークフェンス
 			,Material.IRON_FENCE//鉄フェンス
 			,Material.THIN_GLASS//板ガラス
@@ -164,9 +164,24 @@ public class BuildAssist extends JavaPlugin {
 
 			));
 
-	
+	public static final List<Material> material_destruction = new ArrayList<Material>(Arrays.asList(
+			Material.LONG_GRASS			//草
+			,Material.DEAD_BUSH			//枯れ木
+			,Material.YELLOW_FLOWER		//タンポポ
+			,Material.RED_ROSE			//花9種
+			,Material.BROWN_MUSHROOM	//きのこ
+			,Material.RED_MUSHROOM		//赤きのこ
+			,Material.TORCH				//松明
+			,Material.SNOW				//雪
+			,Material.DOUBLE_PLANT		//高い花、草
+			,Material.WATER				//水
+			,Material.STATIONARY_WATER	//水
+
+			));
+
 	public static String[] line_up_str = {"OFF","上側","下側"}; 
 	public static String[] line_up_step_str = {"上側","下側","両方"}; 
+	public static String[] line_up_des_str = {"OFF","ON"}; 
 
 	
 	@Override

@@ -5,11 +5,8 @@ import java.util.UUID;
 
 import net.md_5.bungee.api.ChatColor;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -124,20 +121,26 @@ public class PlayerInventoryListener implements Listener {
 			} else if (itemstackcurrent.getType().equals(Material.STONE)){
 				//範囲設置スキル ON/OFF
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
-				if(playerdata.ZoneSetSkillFlag == false){
-					playerdata.ZoneSetSkillFlag = true ;
-					player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
-					player.openInventory(MenuInventoryData.getMenuData(player));
-				}else if (playerdata.ZoneSetSkillFlag == true ){
-					playerdata.ZoneSetSkillFlag = false ;
-					player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
-					player.openInventory(MenuInventoryData.getMenuData(player));
+				if(playerdata.level < BuildAssist.config.getZoneSetSkillLevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+					if(playerdata.ZoneSetSkillFlag == false){
+						playerdata.ZoneSetSkillFlag = true ;
+						player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
+						player.openInventory(MenuInventoryData.getMenuData(player));
+					}else if (playerdata.ZoneSetSkillFlag == true ){
+						playerdata.ZoneSetSkillFlag = false ;
+						player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
+						player.openInventory(MenuInventoryData.getMenuData(player));
+					}
 				}
+
+
 			} else if (itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
 				//ホームメニューへ帰還
 				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
 				player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
-				
+
 			} else if (itemstackcurrent.getType().equals(Material.WOOD)){
 				//ブロックを並べるスキル設定
 				if(playerdata.level < BuildAssist.config.getblocklineuplevel() ){
@@ -150,9 +153,10 @@ public class PlayerInventoryListener implements Listener {
 						playerdata.line_up_flg++;
 					}
 					player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					player.openInventory(MenuInventoryData.getMenuData(player));
 				}
-				
+
 			} else if (itemstackcurrent.getType().equals(Material.STEP)){
 				//ブロックを並べるスキルハーフブロック設定
 				if ( playerdata.line_up_step_flg >= 2 ){
@@ -161,10 +165,23 @@ public class PlayerInventoryListener implements Listener {
 					playerdata.line_up_step_flg++;
 				}
 				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				player.openInventory(MenuInventoryData.getMenuData(player));
+			} else if (itemstackcurrent.getType().equals(Material.TNT)){
+				//ブロックを並べるスキル一部ブロックを破壊して並べる設定
+				playerdata.line_up_des_flg ^= 1;
+				/*
+				if ( playerdata.line_up_des_flg == 1 ){
+					playerdata.line_up_des_flg = 0;
+				}else{
+					playerdata.line_up_des_flg = 1;
+				}
+				*/
+				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）破壊設定 ：" + BuildAssist.line_up_des_str[playerdata.line_up_des_flg] ) ;
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 				player.openInventory(MenuInventoryData.getMenuData(player));
 			}
-			
-			
+
 		}
 		//インベントリ名が以下の時処理
 		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面")){
@@ -240,6 +257,19 @@ public class PlayerInventoryListener implements Listener {
 					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
 				}
 
+
+			} else if (itemstackcurrent.getType().equals(Material.DIRT)){
+				//範囲設置スキル、土設置 ON/OFF
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				if(playerdata.zsSkillDirtFlag == false){
+					playerdata.zsSkillDirtFlag = true ;
+					player.sendMessage(ChatColor.RED + "土設置機能ON" ) ;
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}else if (playerdata.zsSkillDirtFlag == true ){
+					playerdata.zsSkillDirtFlag = false ;
+					player.sendMessage(ChatColor.RED + "土設置機能OFF" ) ;
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}
 			}
 
 		}
