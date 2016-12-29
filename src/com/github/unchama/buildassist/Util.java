@@ -68,4 +68,22 @@ public static boolean isSkillEnable(Player player){
 	//それ以外のワールドの場合
 	return false;
 }
+
+
+	//設置ブロックカウント対象ワールドかを確認(対象ならtrue、対象外ならfalse)
+	public static boolean isBlockCount(Player player){
+		//デバッグモード時は全ワールドでスキル使用を許可する(DEBUGWORLDNAME = worldの場合)
+		if(SeichiAssist.DEBUG){
+			return true;
+		}
+		//プレイヤーの場所がメインワールド(world)にいる場合
+		if( player.getWorld().getName().equalsIgnoreCase("world")
+//			|| player.getWorld().getName().equalsIgnoreCase("world_nether")
+//			|| player.getWorld().getName().equalsIgnoreCase("world_the_end")
+		){
+			return true;
+		}
+		//それ以外のワールドの場合
+		return false;
+	}
 }

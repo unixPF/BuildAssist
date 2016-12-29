@@ -60,6 +60,10 @@ public class flyCommand implements TabExecutor {
 			UUID uuid = player.getUniqueId();
 			//playerdataを取得
 			PlayerData playerdata = BuildAssist.playermap.get(uuid);
+			//プレイヤーデータが無い場合は処理終了
+			if(playerdata == null){
+				return false;
+			}
 
 			ExperienceManager expman = new ExperienceManager(player);
 

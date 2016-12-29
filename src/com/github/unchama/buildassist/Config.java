@@ -59,15 +59,21 @@ public class Config{
 	}
 */
 
-
+//ブロックを並べるスキル開放LV
 	public int getblocklineuplevel() {
 		return Util.toInt(config.getString("blocklineup.level"));
 	}
+//ブロックを並べるスキルのマナ消費倍率
 	public double getblocklineupmana_mag() {
 		return Util.toDouble(config.getString("blocklineup.mana_mag"));
 	}
 
 	public int getZoneSetSkillLevel(){
 		return Util.toInt(config.getString("ZoneSetSkill.level"));
+	}
+
+//スキルを使って並べた時のブロックカウント倍率
+	public double getBlockCountMag(){
+		return Util.toDouble(config.getString("BlockCountMag"));
 	}
 }

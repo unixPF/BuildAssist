@@ -37,6 +37,10 @@ public class PlayerRightClickListener implements Listener  {
 		//プレイヤーデータ
 		PlayerData playerdata = BuildAssist.playermap.get(uuid);
 
+		//プレイヤーデータが無い場合は処理終了
+		if(playerdata == null){
+			return;
+		}
 
 		if(action.equals(Action.LEFT_CLICK_AIR) || action.equals(Action.LEFT_CLICK_BLOCK)){
 			//左クリックの処理
@@ -117,6 +121,8 @@ public class PlayerRightClickListener implements Listener  {
 					//スキル発動条件を満たすか
 					boolean SetReady = false ;
 
+					//
+					int block_cnt = 0;
 					//オフハンドアイテムと、範囲内のブロックに一致する物があるかどうか判別
 					//同じ物がない場合・同じ物が3か所以上のY軸で存在する場合→SetReady = false
 					for(;searchY < playerlocy + 2 ;){
@@ -269,6 +275,7 @@ public class PlayerRightClickListener implements Listener  {
 												player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).setType(offhanditem.getType());
 												player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).setData(offhanditem.getData().getData());
 
+												block_cnt++;	//設置数カウント
 												break;
 
 											}
@@ -300,6 +307,11 @@ public class PlayerRightClickListener implements Listener  {
 						}
 					}
 					player.sendMessage(ChatColor.RED + "敷き詰めスキル：処理終了" ) ;
+					
+					if( com.github.unchama.buildassist.Util.isBlockCount(player) == true){
+						playerdata.totalbuildnum += ( block_cnt * BuildAssist.config.getBlockCountMag() );	//設置した数を足す
+					}
+
 					return;
 
 
