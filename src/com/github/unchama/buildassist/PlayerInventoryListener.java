@@ -76,6 +76,11 @@ public class PlayerInventoryListener implements Listener {
 		UUID uuid = player.getUniqueId();
 		PlayerData playerdata = playermap.get(uuid);
 
+		//プレイヤーデータが無い場合は処理終了
+		if(playerdata == null){
+			return;
+		}
+
 		//インベントリ名が以下の時処理
 		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "木の棒メニューB")){
 			event.setCancelled(true);

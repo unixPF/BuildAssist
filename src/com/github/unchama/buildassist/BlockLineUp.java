@@ -52,7 +52,11 @@ public class BlockLineUp implements Listener{
 		//プレイヤーデータ
 		com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
 		PlayerData playerdata = BuildAssist.playermap.get(uuid);
-		
+
+		//プレイヤーデータが無い場合は処理終了
+		if(playerdata == null){
+			return;
+		}
 
 		//スキルOFFなら終了
 		if(playerdata.line_up_flg == 0){
@@ -192,6 +196,11 @@ public class BlockLineUp implements Listener{
 				}
 				playerdata_s.activeskilldata.mana.decreaseMana((double)(v) * mana_mag , player, playerdata_s.level);
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_PLACE, 1, 1);
+				
+				//カウント対象ワールドかチェック
+				if( com.github.unchama.buildassist.Util.isBlockCount(player) == true){
+					playerdata.totalbuildnum += ( v * BuildAssist.config.getBlockCountMag() );	//設置した数を足す
+				}
 //				player.sendMessage("v:" + v +" d:" + d);
 //				player.sendMessage("マナ:" + playerdata_s.activeskilldata.mana.getMana() );
 				

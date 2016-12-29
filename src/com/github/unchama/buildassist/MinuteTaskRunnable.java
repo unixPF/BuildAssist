@@ -30,10 +30,11 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 				//経験値変更用のクラスを設定
 				ExperienceManager expman = new ExperienceManager(player);
 
-				int builds = BuildBlock.calcBuildBlock(player);
 				int minus = -BuildAssist.config.getFlyExp();
 
-				playerdata.levelupdata(player, builds);
+				playerdata.levelupdata(player);
+				playerdata.buildsave(player);
+				
 				if (playerdata.Endlessfly) {
 					if (!expman.hasExp(BuildAssist.config.getFlyExp())) {
 						player.sendMessage(ChatColor.RED
