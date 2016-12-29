@@ -59,6 +59,7 @@ public class MenuInventoryData {
 		}
 
 
+
 //		int prank = Util.calcPlayerRank(player);
 		itemstack = new ItemStack(Material.SKULL_ITEM,1);
 		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
@@ -150,7 +151,7 @@ public class MenuInventoryData {
 				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getZoneSetSkillLevel() + "以上で利用可能");
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(20,itemstack);
+		inventory.setItem(18,itemstack);
 
 
 		//範囲設置スキル 設定画面移動
@@ -162,7 +163,7 @@ public class MenuInventoryData {
 		skullmeta.setLore(lore);
 		skullmeta.setOwner("MHF_Exclamation");
 		itemstack.setItemMeta(skullmeta);
-		inventory.setItem(21,itemstack);
+		inventory.setItem(19,itemstack);
 
 
 		//ブロックを並べるスキル設定
@@ -227,6 +228,14 @@ public class MenuInventoryData {
 			ZSSkill = "OFF" ;
 		}
 
+
+		String ZSDirt ;
+		if(playerdata.zsSkillDirtFlag){
+			ZSDirt = "ON" ;
+		}else {
+			ZSDirt = "OFF" ;
+		}
+
 		int ZSSkillA =(playerdata.AREAint) * 2 + 1;
 
 
@@ -240,6 +249,17 @@ public class MenuInventoryData {
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(0,itemstack);
+
+
+		//土設置のON/OFF
+		itemstack = new ItemStack(Material.DIRT,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "設置時に下の空洞を埋める機能");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "機能の使用設定：" + ZSDirt
+							,ChatColor.RESET + "" +  ChatColor.AQUA + "" + ChatColor.UNDERLINE + "機能の範囲：地下5マスまで");
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(4,itemstack);
 
 
 		//設定状況の表示

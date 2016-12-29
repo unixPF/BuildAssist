@@ -137,8 +137,9 @@ public class PlayerInventoryListener implements Listener {
 						playerdata.ZoneSetSkillFlag = false ;
 						player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
 						player.openInventory(MenuInventoryData.getMenuData(player));
+					}
 				}
-				}
+
 
 			} else if (itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
 				//ホームメニューへ帰還
@@ -261,6 +262,19 @@ public class PlayerInventoryListener implements Listener {
 					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
 				}
 
+
+			} else if (itemstackcurrent.getType().equals(Material.DIRT)){
+				//範囲設置スキル、土設置 ON/OFF
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				if(playerdata.zsSkillDirtFlag == false){
+					playerdata.zsSkillDirtFlag = true ;
+					player.sendMessage(ChatColor.RED + "土設置機能ON" ) ;
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}else if (playerdata.zsSkillDirtFlag == true ){
+					playerdata.zsSkillDirtFlag = false ;
+					player.sendMessage(ChatColor.RED + "土設置機能OFF" ) ;
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}
 			}
 
 		}

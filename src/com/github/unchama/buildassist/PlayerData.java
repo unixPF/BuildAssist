@@ -20,14 +20,15 @@ public class PlayerData {
 	public int flytime;
 	public boolean Endlessfly ;
 	public boolean ZoneSetSkillFlag ;
+	public boolean zsSkillDirtFlag;
 	public int AREAint ;
-	
+
 	//ブロックを並べるスキル設定フラグ
 	public int line_up_flg;
 	public int line_up_step_flg;
 	public int line_up_des_flg;
-	
 	private BuildAssist plugin = BuildAssist.plugin;
+
 
 
 	//プレイヤーデータクラスのコンストラクタ
@@ -41,8 +42,9 @@ public class PlayerData {
 			flytime = 0;
 			Endlessfly = false;
 			ZoneSetSkillFlag = false;
+			zsSkillDirtFlag = false;
 			AREAint = 2;
-			
+
 			line_up_flg = 0;
 			line_up_step_flg = 0;
 			line_up_des_flg = 0;
@@ -63,9 +65,12 @@ public class PlayerData {
 			while(BuildAssist.levellist.get(i).intValue() <= totalbuildnum && (i+2) <= BuildAssist.levellist.size()){
 				if(!BuildAssist.DEBUG){
 					//レベルアップ時のメッセージ
-					player.sendMessage(ChatColor.GOLD+"ﾑﾑｯﾚﾍﾞﾙｱｯﾌﾟ∩( ・ω・)∩【建築Lv("+(i-1)+")→建築Lv("+i+")】");
+					player.sendMessage(ChatColor.GOLD+"ﾑﾑｯﾚﾍﾞﾙｱｯﾌﾟ∩( ・ω・)∩【建築Lv(" + i +")→建築Lv(" + (i+1) + ")】");
 				}
 				i++;
+				if( (i+1) == BuildAssist.levellist.size()){
+					player.sendMessage(ChatColor.GOLD+"最大LVに到達したよ(`･ω･´)");
+				}
 			}
 			level = i;
 		}

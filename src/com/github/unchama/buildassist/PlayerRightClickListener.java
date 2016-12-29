@@ -182,8 +182,17 @@ public class PlayerRightClickListener implements Listener  {
 
 
 						for(;setblockZ < playerlocz + SEARCHint ;){
-							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR ){
+							//ブロック設置座標のブロック判別
+							if(player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.AIR||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.SNOW||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.LONG_GRASS||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.DEAD_BUSH||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.YELLOW_FLOWER||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.RED_ROSE||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.RED_MUSHROOM||
+								player.getWorld().getBlockAt(setblockX,setblockY,setblockZ).getType() == Material.BROWN_MUSHROOM){
 								setunder = 1;
+								if(playerdata.zsSkillDirtFlag){
 								for(;setunder < 5;){
 									//設置対象の[setunder]分の下のブロックが空気かどうか
 									if(player.getWorld().getBlockAt(setblockX,(setblockY - setunder),setblockZ).getType() == Material.AIR||
@@ -204,6 +213,7 @@ public class PlayerRightClickListener implements Listener  {
 									}
 									setunder ++;
 
+								}
 								}
 
 								//他人の保護がかかっている場合は処理を終了
