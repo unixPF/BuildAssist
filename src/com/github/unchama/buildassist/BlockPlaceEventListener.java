@@ -27,7 +27,7 @@ public class BlockPlaceEventListener implements Listener {
 
 		Block b = event.getBlock();
 		//ブロックカウント対象の場合にカウントする
-		if( BuildAssist.materiallist.contains(b.getType()) == true ) {
+//		if( BuildAssist.materiallist.contains(b.getType()) == true ) {
 			//プレイヤーのuuidを取得
 			UUID uuid = player.getUniqueId();
 			//プレイヤーデータ取得
@@ -39,7 +39,7 @@ public class BlockPlaceEventListener implements Listener {
 
 			playerdata.totalbuildnum++;
 //			player.sendMessage(""+b.getType() + ":"+b.getData());
-		}
+//		}
 
 	}
 
