@@ -125,6 +125,10 @@ public class PlayerData {
 		//建築系データを保存
 		public void buildsave(Player player){
 			com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
+			if (playerdata_s == null){
+				player.sendMessage(ChatColor.RED+"建築系データ保存失敗しました");
+				return;
+			}
 			playerdata_s.build_count_set(totalbuildnum);
 			playerdata_s.build_lv_set(level);
 //			plugin.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "建築系データ保存");
