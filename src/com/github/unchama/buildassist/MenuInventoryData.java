@@ -26,6 +26,10 @@ public class MenuInventoryData {
 		UUID uuid = player.getUniqueId();
 		//プレイヤーデータ
 		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+		//プレイヤーデータが無い場合は処理終了
+		if(playerdata == null){
+			return null;
+		}
 
 		Inventory inventory = Bukkit.getServer().createInventory(null,4*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "木の棒メニューB");
 		ItemStack itemstack;
