@@ -86,4 +86,19 @@ public static boolean isSkillEnable(Player player){
 		//それ以外のワールドの場合
 		return false;
 	}
+	
+	//指定した名前のマインスタックの番号を返す		見つからなかった場合は-1
+	//名前はSeichiAssist.javaのminestacklistに定義されてる英語名
+	public static int MineStackobjname_indexOf(String s){
+		int id = -1;
+		for(int x = 0 ; x < SeichiAssist.minestacklist.size() ; x++){
+			if( s.equals( SeichiAssist.minestacklist.get(x).getMineStackObjName() ) ){
+				id = x;
+				break;
+			}
+		}
+		return id;
+	}
+	
+	
 }

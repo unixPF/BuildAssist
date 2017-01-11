@@ -1,5 +1,6 @@
 package com.github.unchama.buildassist;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -17,6 +18,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import com.github.unchama.seichiassist.SeichiAssist;
 
 public class PlayerInventoryListener implements Listener {
 	HashMap<UUID,PlayerData> playermap = BuildAssist.playermap;
@@ -157,36 +160,26 @@ public class PlayerInventoryListener implements Listener {
 					}else{
 						playerdata.line_up_flg++;
 					}
-					player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
+					player.sendMessage(ChatColor.GREEN + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
 					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					player.openInventory(MenuInventoryData.getMenuData(player));
 				}
 
-			} else if (itemstackcurrent.getType().equals(Material.STEP)){
-				//ブロックを並べるスキルハーフブロック設定
-				if ( playerdata.line_up_step_flg >= 2 ){
-					playerdata.line_up_step_flg = 0;
-				}else{
-					playerdata.line_up_step_flg++;
-				}
-				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
-				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
-				player.openInventory(MenuInventoryData.getMenuData(player));
-			} else if (itemstackcurrent.getType().equals(Material.TNT)){
-				//ブロックを並べるスキル一部ブロックを破壊して並べる設定
-				playerdata.line_up_des_flg ^= 1;
-				/*
-				if ( playerdata.line_up_des_flg == 1 ){
-					playerdata.line_up_des_flg = 0;
-				}else{
-					playerdata.line_up_des_flg = 1;
-				}
-				*/
-				player.sendMessage(ChatColor.RED + "ブロックを並べるスキル（仮）破壊設定 ：" + BuildAssist.line_up_des_str[playerdata.line_up_des_flg] ) ;
-				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
-				player.openInventory(MenuInventoryData.getMenuData(player));
+			} else if (itemstackcurrent.getType().equals(Material.PAPER)){
+				//ブロックを並べる設定メニューを開く
+				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
+				player.openInventory(MenuInventoryData.getBlockLineUpData(player));
+
+			} else if (itemstackcurrent.getType().equals(Material.WORKBENCH)){
+				//MineStackブロック一括クラフトメニュー画面へ
+				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
+				player.openInventory(MenuInventoryData.getBlockCraftData(player));
+
 			}
 
+
+			
+			
 		}
 		//インベントリ名が以下の時処理
 		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面")){
@@ -282,4 +275,182 @@ public class PlayerInventoryListener implements Listener {
 	}
 
 
+	//ブロックを並べるスキル（仮）設定画面
+	@EventHandler
+	public void onPlayerClickBlockLineUpEvent(InventoryClickEvent event){
+		//外枠のクリック処理なら終了
+		if(event.getClickedInventory() == null){
+			return;
+		}
+
+		ItemStack itemstackcurrent = event.getCurrentItem();
+		InventoryView view = event.getView();
+		HumanEntity he = view.getPlayer();
+		//インベントリを開けたのがプレイヤーではない時終了
+		if(!he.getType().equals(EntityType.PLAYER)){
+			return;
+		}
+
+		Inventory topinventory = view.getTopInventory();
+		//インベントリが存在しない時終了
+		if(topinventory == null){
+			return;
+		}
+		//インベントリサイズが36でない時終了
+		if(topinventory.getSize() != 36){
+			return;
+		}
+		Player player = (Player)he;
+		UUID uuid = player.getUniqueId();
+		PlayerData playerdata = playermap.get(uuid);
+
+		//プレイヤーデータが無い場合は処理終了
+		if(playerdata == null){
+			return;
+		}
+
+		//インベントリ名が以下の時処理
+		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「ブロックを並べるスキル（仮）」設定")){
+			event.setCancelled(true);
+
+			//プレイヤーインベントリのクリックの場合終了
+			if(event.getClickedInventory().getType().equals(InventoryType.PLAYER)){
+				return;
+			}
+			/*
+			 * クリックしたボタンに応じた各処理内容の記述ここから
+			 */
+			if(itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
+				//ホームメニューへ帰還
+				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
+				player.openInventory(MenuInventoryData.getMenuData(player));
+
+			} else if (itemstackcurrent.getType().equals(Material.WOOD)){
+				//ブロックを並べるスキル設定
+				if(playerdata.level < BuildAssist.config.getblocklineuplevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+
+					if ( playerdata.line_up_flg >= 2 ){
+						playerdata.line_up_flg = 0;
+					}else{
+						playerdata.line_up_flg++;
+					}
+					player.sendMessage(ChatColor.GREEN + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg] ) ;
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					player.openInventory(MenuInventoryData.getBlockLineUpData(player));
+				}
+
+			} else if (itemstackcurrent.getType().equals(Material.STEP)){
+				//ブロックを並べるスキルハーフブロック設定
+				if ( playerdata.line_up_step_flg >= 2 ){
+					playerdata.line_up_step_flg = 0;
+				}else{
+					playerdata.line_up_step_flg++;
+				}
+				player.sendMessage(ChatColor.GREEN + "ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				player.openInventory(MenuInventoryData.getBlockLineUpData(player));
+				
+			} else if (itemstackcurrent.getType().equals(Material.TNT)){
+				//ブロックを並べるスキル一部ブロックを破壊して並べる設定
+				playerdata.line_up_des_flg ^= 1;
+				player.sendMessage(ChatColor.GREEN + "破壊設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_des_flg] ) ;
+				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+				player.openInventory(MenuInventoryData.getBlockLineUpData(player));
+				
+			} else if (itemstackcurrent.getType().equals(Material.CHEST)){
+				//マインスタックの方を優先して消費する設定
+				if(playerdata.level < BuildAssist.config.getblocklineupMinestacklevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+					playerdata.line_up_minestack_flg ^= 1;
+					player.sendMessage(ChatColor.GREEN + "マインスタック優先設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_minestack_flg] ) ;
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					player.openInventory(MenuInventoryData.getBlockLineUpData(player));
+				}
+			}
+
+		}
+
+	}
+
+	
+	
+	//ブロックを並べるスキル（仮）設定画面
+	@EventHandler
+	public void onPlayerClickBlockCraft(InventoryClickEvent event){
+		//外枠のクリック処理なら終了
+		if(event.getClickedInventory() == null){
+			return;
+		}
+
+		ItemStack itemstackcurrent = event.getCurrentItem();
+		InventoryView view = event.getView();
+		HumanEntity he = view.getPlayer();
+		//インベントリを開けたのがプレイヤーではない時終了
+		if(!he.getType().equals(EntityType.PLAYER)){
+			return;
+		}
+
+		Inventory topinventory = view.getTopInventory();
+		//インベントリが存在しない時終了
+		if(topinventory == null){
+			return;
+		}
+		//インベントリサイズが36でない時終了
+		if(topinventory.getSize() != 36){
+			return;
+		}
+		Player player = (Player)he;
+		UUID uuid = player.getUniqueId();
+		PlayerData playerdata = playermap.get(uuid);
+
+		//プレイヤーデータが無い場合は処理終了
+		if(playerdata == null){
+			return;
+		}
+
+		//インベントリ名が以下の時処理
+		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト")){
+			event.setCancelled(true);
+
+			//プレイヤーインベントリのクリックの場合終了
+			if(event.getClickedInventory().getType().equals(InventoryType.PLAYER)){
+				return;
+			}
+			/*
+			 * クリックしたボタンに応じた各処理内容の記述ここから
+			 */
+			if(itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
+				//ホームメニューへ帰還
+				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
+				player.openInventory(MenuInventoryData.getMenuData(player));
+
+				//石を石ハーフブロックに変換10～10万
+			} else if (itemstackcurrent.getType().equals(Material.STEP)){
+				if(playerdata.level < BuildAssist.config.getMinestackBlockCraftlevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+
+					com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
+					int x = itemstackcurrent.getAmount();
+					int id_1 = Util.MineStackobjname_indexOf("stone");
+					int id_2 = Util.MineStackobjname_indexOf("step0");
+					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
+					if ( playerdata_s.minestack.getNum(id_1) < (int)Math.pow(10, x)){
+						player.sendMessage(ChatColor.RED + "アイテムが足りません" );
+					}else{
+						playerdata_s.minestack.setNum(id_1, playerdata_s.minestack.getNum(id_1) - (int)Math.pow(10, x) );
+						playerdata_s.minestack.setNum(id_2, playerdata_s.minestack.getNum(id_2) + (int)Math.pow(10, x) * 2 );
+						player.sendMessage(ChatColor.GREEN + "石"+ (int)Math.pow(10, x) +"個→石ハーフブロック"+ ((int)Math.pow(10, x)*2) +"個変換" );
+					}
+					player.openInventory(MenuInventoryData.getBlockCraftData(player));
+				}
+			}
+
+		}
+
+	}
+	
 }

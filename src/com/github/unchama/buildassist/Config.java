@@ -67,6 +67,10 @@ public class Config{
 	public double getblocklineupmana_mag() {
 		return Util.toDouble(config.getString("blocklineup.mana_mag"));
 	}
+//ブロックを並べるスキルマインスタック優先開放LV
+	public int getblocklineupMinestacklevel() {
+		return Util.toInt(config.getString("blocklineup.minestack_level"));
+	}
 
 	public int getZoneSetSkillLevel(){
 		return Util.toInt(config.getString("ZoneSetSkill.level"));
@@ -76,4 +80,10 @@ public class Config{
 	public double getBlockCountMag(){
 		return Util.toDouble(config.getString("BlockCountMag"));
 	}
+	
+	//MineStackブロック一括クラフト開放LV
+	public int getMinestackBlockCraftlevel() {
+		return Util.toInt(config.getString("minestack_BlockCraft.level"));
+	}
+	
 }

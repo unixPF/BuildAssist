@@ -16,6 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.github.unchama.seichiassist.SeichiAssist;
+
 public class MenuInventoryData {
 
 
@@ -170,38 +172,42 @@ public class MenuInventoryData {
 		itemstack = new ItemStack(Material.WOOD,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.WOOD);
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg]);
-		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "オフハンドに木の棒、メインハンドにブロックを持ってる状態で"
-				, ChatColor.RESET + "" + ChatColor.GRAY + "左クリックするとメインハンドのブロックを向いてる方向に並べて設置します。"
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "オフハンドに木の棒、メインハンドに設置したいブロックを持って"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "左クリックすると向いてる方向に並べて設置します。"
 				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getblocklineuplevel() + "以上で利用可能"
 				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
-				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "※スキル発動時にマナを消費します。 最大消費マナ："+(BuildAssist.config.getblocklineupmana_mag()*64)
+//				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "※スキル発動時にマナを消費します。 最大消費マナ："+(BuildAssist.config.getblocklineupmana_mag()*64)
+				
 				);
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(27,itemstack);
 
-		//ブロックを並べるスキルハーフブロック設定
-		itemstack = new ItemStack(Material.STEP,1);
-		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮）ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg]);
-		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ブロックを並べるスキルでハーフブロックを並べる時の位置を決めます。"
-				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+		//ブロックを並べる設定メニューへ
+		itemstack = new ItemStack(Material.PAPER,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.PAPER);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "「ブロックを並べるスキル（仮） 」設定画面へ");
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "現在の設定"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "スキル設定 ：" + BuildAssist.line_up_str[playerdata.line_up_flg]
+				, ChatColor.RESET + "" + ChatColor.GRAY + "ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg]
+				, ChatColor.RESET + "" + ChatColor.GRAY + "破壊設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_des_flg]
+				, ChatColor.RESET + "" + ChatColor.GRAY + "マインスタック優先設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_minestack_flg]
 				);
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
 		inventory.setItem(28,itemstack);
 
-		//ブロックを並べるスキル一部ブロックを破壊して並べる設定
-		itemstack = new ItemStack(Material.TNT,1);
-		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.TNT);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮）破壊設定 ：" + BuildAssist.line_up_des_str[playerdata.line_up_des_flg]);
-		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ブロックを並べるスキルでブロックを並べるとき一部ブロックを破壊して並べます。"
-				, ChatColor.RESET + "" + ChatColor.GRAY + "破壊対象ブロック：草,花,水,雪,松明,きのこ"
-				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+		//MineStackブロック一括クラフトメニュー画面へ
+		itemstack = new ItemStack(Material.WORKBENCH,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.WORKBENCH);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "MineStackブロック一括クラフトメニュー画面へ");
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
 				);
 		itemmeta.setLore(lore);
 		itemstack.setItemMeta(itemmeta);
-		inventory.setItem(29,itemstack);
+		inventory.setItem(35,itemstack);
+
 		return inventory;
 
 	}
@@ -342,4 +348,138 @@ public class MenuInventoryData {
 
 		return inventory;
 	}
+
+	//ブロックを並べる設定メニュー
+	public static Inventory getBlockLineUpData(Player p){
+		//プレイヤーを取得
+		Player player = p.getPlayer();
+		//UUID取得
+		UUID uuid = player.getUniqueId();
+		//プレイヤーデータ
+		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+		
+		Inventory inventory = Bukkit.getServer().createInventory(null,4*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「ブロックを並べるスキル（仮）」設定");
+		ItemStack itemstack;
+		ItemMeta itemmeta;
+		SkullMeta skullmeta;
+		List<String> lore = new ArrayList<String>();
+
+		// 1ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ホームへ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowLeft");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(27,itemstack);
+
+		//ブロックを並べるスキル設定
+		itemstack = new ItemStack(Material.WOOD,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.WOOD);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ブロックを並べるスキル（仮） ：" + BuildAssist.line_up_str[playerdata.line_up_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "オフハンドに木の棒、メインハンドに設置したいブロックを持って"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "左クリックすると向いてる方向に並べて設置します。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getblocklineuplevel() + "以上で利用可能"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+//				, ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "※スキル発動時にマナを消費します。 最大消費マナ："+(BuildAssist.config.getblocklineupmana_mag()*64)
+				
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(0,itemstack);
+
+		//ブロックを並べるスキルハーフブロック設定
+		itemstack = new ItemStack(Material.STEP,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ハーフブロックを並べる時の位置を決めます。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(1,itemstack);
+
+		//ブロックを並べるスキル一部ブロックを破壊して並べる設定
+		itemstack = new ItemStack(Material.TNT,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.TNT);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "破壊設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_des_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ブロックを並べるとき特定のブロックを破壊して並べます。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "破壊対象ブロック：草,花,水,雪,松明,きのこ"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(2,itemstack);
+
+		//マインスタックの方を優先して消費する設定
+		itemstack = new ItemStack(Material.CHEST,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CHEST);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "マインスタック優先設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_minestack_flg]);
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "石ハーフブロックを並べるとき"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "マインスタックの在庫を優先して消費します。"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getblocklineupMinestacklevel() + "以上で利用可能"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(8,itemstack);
+		
+		return inventory;
+	}
+
+	
+	//MineStackブロック一括クラフトメニュー
+	public static Inventory getBlockCraftData(Player p){
+		//プレイヤーを取得
+		Player player = p.getPlayer();
+		//UUID取得
+		UUID uuid = player.getUniqueId();
+		//プレイヤーデータ
+		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+		com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
+		
+		Inventory inventory = Bukkit.getServer().createInventory(null,4*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト");
+		ItemStack itemstack;
+		ItemMeta itemmeta;
+		SkullMeta skullmeta;
+		List<String> lore = new ArrayList<String>();
+
+		// 1ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ホームへ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowLeft");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(27,itemstack);
+
+		//石を石ハーフブロックに変換10～10万
+		int num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("stone"));
+		int num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("step0"));
+		
+		for(int x = 1 ; x <= 5 ; x++){
+			itemstack = new ItemStack(Material.STEP,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石を石ハーフブロックに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "石"+ (int)Math.pow(10, x) +"個→石ハーフブロック"+ ((int)Math.pow(10, x)*2) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石ハーフブロックの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel() + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x-1 , itemstack);
+		}
+		
+		return inventory;
+	}
+
+
 }

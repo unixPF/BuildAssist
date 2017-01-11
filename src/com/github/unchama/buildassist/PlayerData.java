@@ -26,6 +26,7 @@ public class PlayerData {
 	public int line_up_flg;
 	public int line_up_step_flg;
 	public int line_up_des_flg;
+	public int line_up_minestack_flg;
 	private BuildAssist plugin = BuildAssist.plugin;
 
 
@@ -47,7 +48,7 @@ public class PlayerData {
 			line_up_flg = 0;
 			line_up_step_flg = 0;
 			line_up_des_flg = 0;
-
+			line_up_minestack_flg = 0;
 
 		}
 		//レベルを更新
