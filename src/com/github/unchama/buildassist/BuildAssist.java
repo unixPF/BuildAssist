@@ -206,7 +206,7 @@ public class BuildAssist extends JavaPlugin {
 
 	public static String[] line_up_str = {"OFF","上側","下側"}; 
 	public static String[] line_up_step_str = {"上側","下側","両方"}; 
-	public static String[] line_up_des_str = {"OFF","ON"}; 
+	public static String[] line_up_off_on_str = {"OFF","ON"}; 
 
 	
 	@Override

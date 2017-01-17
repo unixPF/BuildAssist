@@ -4,6 +4,7 @@ flyexp: '50'
 blocklineup:
   level: '15'
   mana_mag: '0.0'
+  minestack_level: '30'
 
 ZoneSetSkill:
   level: '15'
@@ -11,3 +12,9 @@ ZoneSetSkill:
 #
 #スキルを使って並べた時のブロックカウント倍率
 BlockCountMag: '0.2'
+
+
+# MineStackブロック一括クラフト
+minestack_BlockCraft:
+  level: '25'
+  

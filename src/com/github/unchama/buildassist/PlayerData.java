@@ -3,9 +3,8 @@ package com.github.unchama.buildassist;
 
 import java.util.UUID;
 
-import org.bukkit.entity.Player;
 import org.bukkit.ChatColor;
-
+import org.bukkit.entity.Player;
 
 import com.github.unchama.seichiassist.SeichiAssist;
 
@@ -27,6 +26,7 @@ public class PlayerData {
 	public int line_up_flg;
 	public int line_up_step_flg;
 	public int line_up_des_flg;
+	public int line_up_minestack_flg;
 	private BuildAssist plugin = BuildAssist.plugin;
 
 
@@ -48,7 +48,7 @@ public class PlayerData {
 			line_up_flg = 0;
 			line_up_step_flg = 0;
 			line_up_des_flg = 0;
-
+			line_up_minestack_flg = 0;
 
 		}
 		//レベルを更新
@@ -92,7 +92,7 @@ public class PlayerData {
 		public boolean isOffline() {
 			return BuildAssist.plugin.getServer().getPlayer(uuid) == null;
 		}
-		
+
 		//建築系データを読み込む　ture:読み込み成功　false:読み込み失敗
 		public boolean buildload(Player player){
 			com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
@@ -100,13 +100,18 @@ public class PlayerData {
 				return false;
 			}
 			int server_num = SeichiAssist.config.getServerNum();
-			
+
 			totalbuildnum = playerdata_s.build_count_get();
 			//ブロック設置カウントが統合されてない場合は統合する
 			if(server_num >= 1 && server_num <= 3){
 				byte f = playerdata_s.build_count_flg_get();
 				if( (f & (0x01 << server_num))  == 0 ){
-					totalbuildnum += BuildBlock.calcBuildBlock(player);
+					if(f == 0) {
+						// 初回は加算じゃなくベースとして代入にする
+						totalbuildnum = BuildBlock.calcBuildBlock(player);
+					} else {
+						totalbuildnum += BuildBlock.calcBuildBlock(player);
+					}
 					f = (byte) (f | (0x01 << server_num));
 					playerdata_s.build_count_flg_set(f);
 					playerdata_s.build_count_set(totalbuildnum);
@@ -125,11 +130,15 @@ public class PlayerData {
 		//建築系データを保存
 		public void buildsave(Player player){
 			com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
+			if (playerdata_s == null){
+				player.sendMessage(ChatColor.RED+"建築系データ保存失敗しました");
+				return;
+			}
 			playerdata_s.build_count_set(totalbuildnum);
 			playerdata_s.build_lv_set(level);
 //			plugin.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "建築系データ保存");
 		}
 
-		
-		
+
+
 	}
