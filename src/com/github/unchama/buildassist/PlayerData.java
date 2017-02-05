@@ -42,7 +42,7 @@ public class PlayerData {
 			flytime = 0;
 			Endlessfly = false;
 			ZoneSetSkillFlag = false;
-			zsSkillDirtFlag = false;
+			zsSkillDirtFlag = true;
 			AREAint = 2;
 
 			line_up_flg = 0;

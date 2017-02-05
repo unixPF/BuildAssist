@@ -1,10 +1,7 @@
 package com.github.unchama.buildassist;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
-
-import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -21,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.github.unchama.seichiassist.SeichiAssist;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class PlayerInventoryListener implements Listener {
 	HashMap<UUID,PlayerData> playermap = BuildAssist.playermap;
@@ -145,11 +144,14 @@ public class PlayerInventoryListener implements Listener {
 				}
 
 
-			} else if (itemstackcurrent.getType().equals(Material.SKULL_ITEM)){
-				//ホームメニューへ帰還
+			} else if (itemstackcurrent.getType().equals(Material.SKULL_ITEM) && itemstackcurrent.getItemMeta().getDisplayName().contains("「範囲設置スキル」設定画面へ")){
+				//範囲設置スキル設定画面を開く
 				player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_OPEN, 1, (float) 0.1);
-				player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
-
+				if(playerdata.level < BuildAssist.config.getblocklineuplevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				}
 			} else if (itemstackcurrent.getType().equals(Material.WOOD)){
 				//ブロックを並べるスキル設定
 				if(playerdata.level < BuildAssist.config.getblocklineuplevel() ){
@@ -179,8 +181,8 @@ public class PlayerInventoryListener implements Listener {
 			}
 
 
-			
-			
+
+
 		}
 		//インベントリ名が以下の時処理
 		if(topinventory.getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "「範囲設置スキル」設定画面")){
@@ -245,15 +247,20 @@ public class PlayerInventoryListener implements Listener {
 				}
 			} else if (itemstackcurrent.getType().equals(Material.STONE)){
 				//範囲設置スキル ON/OFF
+				//範囲設置スキル ON/OFF
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
-				if(playerdata.ZoneSetSkillFlag == false){
-					playerdata.ZoneSetSkillFlag = true ;
-					player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
-					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
-				}else if (playerdata.ZoneSetSkillFlag == true ){
-					playerdata.ZoneSetSkillFlag = false ;
-					player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
-					player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+				if(playerdata.level < BuildAssist.config.getZoneSetSkillLevel() ){
+					player.sendMessage(ChatColor.RED + "建築LVが足りません") ;
+				}else{
+					if(playerdata.ZoneSetSkillFlag == false){
+						playerdata.ZoneSetSkillFlag = true ;
+						player.sendMessage(ChatColor.RED + "範囲設置スキルON" ) ;
+						player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+					}else if (playerdata.ZoneSetSkillFlag == true ){
+						playerdata.ZoneSetSkillFlag = false ;
+						player.sendMessage(ChatColor.RED + "範囲設置スキルOFF" ) ;
+						player.openInventory(MenuInventoryData.getSetBlockSkillData(player));
+					}
 				}
 
 
@@ -352,14 +359,14 @@ public class PlayerInventoryListener implements Listener {
 				player.sendMessage(ChatColor.GREEN + "ハーフブロック設定 ：" + BuildAssist.line_up_step_str[playerdata.line_up_step_flg] ) ;
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 				player.openInventory(MenuInventoryData.getBlockLineUpData(player));
-				
+
 			} else if (itemstackcurrent.getType().equals(Material.TNT)){
 				//ブロックを並べるスキル一部ブロックを破壊して並べる設定
 				playerdata.line_up_des_flg ^= 1;
 				player.sendMessage(ChatColor.GREEN + "破壊設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_des_flg] ) ;
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 				player.openInventory(MenuInventoryData.getBlockLineUpData(player));
-				
+
 			} else if (itemstackcurrent.getType().equals(Material.CHEST)){
 				//マインスタックの方を優先して消費する設定
 				if(playerdata.level < BuildAssist.config.getblocklineupMinestacklevel() ){
@@ -374,8 +381,8 @@ public class PlayerInventoryListener implements Listener {
 		}
 	}
 
-	
-	
+
+
 	//MineStackブロック一括クラフト画面1
 	@EventHandler
 	public void onPlayerClickBlockCraft(InventoryClickEvent event){
