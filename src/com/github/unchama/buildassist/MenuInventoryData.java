@@ -201,7 +201,7 @@ public class MenuInventoryData {
 		//MineStackブロック一括クラフトメニュー画面へ
 		itemstack = new ItemStack(Material.WORKBENCH,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.WORKBENCH);
-		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "MineStackブロック一括クラフトメニュー画面へ");
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト画面へ");
 		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
 				);
 		itemmeta.setLore(lore);
@@ -364,7 +364,7 @@ public class MenuInventoryData {
 		SkullMeta skullmeta;
 		List<String> lore = new ArrayList<String>();
 
-		// 1ページ目を開く
+		// ホームを開く
 		itemstack = new ItemStack(Material.SKULL_ITEM,1);
 		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
 		itemstack.setDurability((short) 3);
@@ -418,7 +418,7 @@ public class MenuInventoryData {
 		itemstack = new ItemStack(Material.CHEST,1);
 		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CHEST);
 		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "マインスタック優先設定 ：" + BuildAssist.line_up_off_on_str[playerdata.line_up_minestack_flg]);
-		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "石ハーフブロックを並べるとき"
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "スキルでブロックを並べるとき"
 				, ChatColor.RESET + "" + ChatColor.GRAY + "マインスタックの在庫を優先して消費します。"
 				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getblocklineupMinestacklevel() + "以上で利用可能"
 				, ChatColor.RESET + "" + ChatColor.GRAY + "クリックで切り替え"
@@ -438,31 +438,42 @@ public class MenuInventoryData {
 		//UUID取得
 		UUID uuid = player.getUniqueId();
 		//プレイヤーデータ
-		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+//		PlayerData playerdata = BuildAssist.playermap.get(uuid);
 		com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
 		
-		Inventory inventory = Bukkit.getServer().createInventory(null,4*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト");
+		Inventory inventory = Bukkit.getServer().createInventory(null,6*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト1");
 		ItemStack itemstack;
 		ItemMeta itemmeta;
 		SkullMeta skullmeta;
 		List<String> lore = new ArrayList<String>();
 
-		// 1ページ目を開く
-		itemstack = new ItemStack(Material.SKULL_ITEM,1);
+		// ホーム目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1,(short) 3);
 		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
-		itemstack.setDurability((short) 3);
+//		itemstack.setDurability((short) 3);
 		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ホームへ");
 		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
 				);
 		skullmeta.setLore(lore);
 		skullmeta.setOwner("MHF_ArrowLeft");
 		itemstack.setItemMeta(skullmeta);
-		inventory.setItem(27,itemstack);
+		inventory.setItem(45,itemstack);
+
+		// 2ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1,(short) 3);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+//		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "2ページ目へ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowDown");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(53,itemstack);
 
 		//石を石ハーフブロックに変換10～10万
 		int num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("stone"));
 		int num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("step0"));
-		
 		for(int x = 1 ; x <= 5 ; x++){
 			itemstack = new ItemStack(Material.STEP,x);
 			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STEP);
@@ -470,16 +481,485 @@ public class MenuInventoryData {
 			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "石"+ (int)Math.pow(10, x) +"個→石ハーフブロック"+ ((int)Math.pow(10, x)*2) +"個"
 					, ChatColor.RESET + "" + ChatColor.GRAY + "石の数:" + String.format("%,d",num_1)
 					, ChatColor.RESET + "" + ChatColor.GRAY + "石ハーフブロックの数:" + String.format("%,d",num_2)
-					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel() + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(1) + "以上で利用可能"
 					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
 					);
 			itemmeta.setLore(lore);
 			itemstack.setItemMeta(itemmeta);
 			inventory.setItem(x-1 , itemstack);
 		}
+
 		
+		//石を石レンガに変換10～10万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("stone"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("smooth_brick0"));
+		for(int x = 1 ; x <= 5 ; x++){
+			itemstack = new ItemStack(Material.SMOOTH_BRICK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.SMOOTH_BRICK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石を石レンガに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "石"+ (int)Math.pow(10, x) +"個→石レンガ"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石レンガの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(1) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+8 , itemstack);
+		}
+
+		//花崗岩を磨かれた花崗岩に変換10～1万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("granite"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.STONE,x,(short)2);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "花崗岩を磨かれた花崗岩に変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "花崗岩"+ (int)Math.pow(10, x) +"個→磨かれた花崗岩"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "花崗岩の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "磨かれた花崗岩の数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+17 , itemstack);
+		}
+
+		//閃緑岩を磨かれた閃緑岩に変換10～1万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("diorite"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_diorite"));
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.STONE,x,(short)4);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "閃緑岩を磨かれた閃緑岩に変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "閃緑岩"+ (int)Math.pow(10, x) +"個→磨かれた閃緑岩"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "閃緑岩の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "磨かれた閃緑岩の数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+22 , itemstack);
+		}
+		
+		//安山岩を磨かれた安山岩に変換10～1万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("andesite"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_andesite"));
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.STONE,x,(short)6);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.STONE);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "安山岩を磨かれた安山岩に変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "安山岩"+ (int)Math.pow(10, x) +"個→磨かれた安山岩"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "安山岩の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "磨かれた安山岩の数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+26 , itemstack);
+		}
+		
+		//ネザー水晶をネザー水晶ブロックに変換10～1万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("quartz"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("quartz_block"));
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.QUARTZ_BLOCK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.QUARTZ_BLOCK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ネザー水晶をネザー水晶ブロックに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ネザー水晶"+ ((int)Math.pow(10, x)*4) +"個→ネザー水晶ブロック"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザー水晶の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザー水晶ブロックの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+31 , itemstack);
+		}
+		
+		//レンガをレンガブロックに変換10～1万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("brick_item"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("brick"));
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.BRICK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.BRICK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "レンガをレンガブロックに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "レンガ"+ ((int)Math.pow(10, x)*4) +"個→レンガブロック"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "レンガの数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "レンガブロックの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+35 , itemstack);
+		}
+
+		//ネザーレンガをネザーレンガブロックに変換10～1万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_brick_item"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_brick"));
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.NETHER_BRICK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.NETHER_BRICK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ネザーレンガをネザーレンガブロックに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ネザーレンガ"+ ((int)Math.pow(10, x)*4) +"個→ネザーレンガブロック"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーレンガの数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーレンガブロックの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+40 , itemstack);
+		}
 		return inventory;
 	}
 
+	//MineStackブロック一括クラフトメニュー2
+	public static Inventory getBlockCraftData2(Player p){
+		//プレイヤーを取得
+		Player player = p.getPlayer();
+		//UUID取得
+		UUID uuid = player.getUniqueId();
+		//プレイヤーデータ
+//		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+		com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
+		
+		Inventory inventory = Bukkit.getServer().createInventory(null,6*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト2");
+		ItemStack itemstack;
+		ItemMeta itemmeta;
+		SkullMeta skullmeta;
+		List<String> lore = new ArrayList<String>();
 
+		// 1ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1,(short) 3);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+//		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "1ページ目へ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowUp");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(45,itemstack);
+
+		// 3ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1,(short) 3);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+//		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "3ページ目へ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowDown");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(53,itemstack);
+
+		//雪玉を雪（ブロック）に変換10～1万
+		int num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("snow_ball"));
+		int num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("snow_block"));
+		int num_3;
+		for(int x = 1 ; x <= 4 ; x++){
+			itemstack = new ItemStack(Material.SNOW_BLOCK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.SNOW_BLOCK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "雪玉を雪（ブロック）に変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "雪玉"+ ((int)Math.pow(10, x)*4) +"個→雪（ブロック）"+ (int)Math.pow(10, x) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "雪玉の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "雪（ブロック）の数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x-1 , itemstack);
+		}
+
+
+		//ネザーウォートとネザーレンガを赤いネザーレンガに変換10～10万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_stalk"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("red_nether_brick"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_brick_item"));
+		for(int x = 1 ; x <= 5 ; x++){
+			itemstack = new ItemStack(Material.RED_NETHER_BRICK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.RED_NETHER_BRICK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ネザーウォートをとネザーレンガを赤いネザーレンガに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ネザーウォート"+ ((int)Math.pow(10, x)*2) +"個+ネザーレンガ"+ ((int)Math.pow(10, x)*2) +"個→赤いネザーレンガ"+ ((int)Math.pow(10, x)) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーウォートの数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーレンガの数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "赤いネザーレンガの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(2) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+4 , itemstack);
+		}
+
+		//石炭を消費して鉄鉱石を鉄インゴットに変換4～4000
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ore"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ingot"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.IRON_INGOT,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.IRON_INGOT);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石炭を消費して鉄鉱石を鉄インゴットに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "鉄鉱石"+ ((int)Math.pow(10, x)*4) +"個+石炭"+ (int)Math.pow(10, x) +"個→鉄インゴット"+ ((int)Math.pow(10, x)*4) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "鉄鉱石の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石炭の数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "鉄インゴットの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+9 , itemstack);
+		}
+
+		//溶岩バケツを消費して鉄鉱石を鉄インゴットに変換50～5万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ore"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ingot"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("lava_bucket"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.IRON_INGOT,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.IRON_INGOT);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "溶岩バケツを消費して鉄鉱石を鉄インゴットに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "鉄鉱石"+ ((int)Math.pow(10, x)*50) +"個+溶岩バケツ"+ (int)Math.pow(10, x) +"個→鉄インゴット"+ ((int)Math.pow(10, x)*50) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "鉄鉱石の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "溶岩バケツの数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "鉄インゴットの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+14 , itemstack);
+		}
+
+		//石炭を消費して金鉱石を金インゴットに変換4～4000
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("gold_ore"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("gold_ingot"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.GOLD_INGOT,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.GOLD_INGOT);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石炭を消費して金鉱石を金インゴットに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "金鉱石"+ ((int)Math.pow(10, x)*4) +"個+石炭"+ (int)Math.pow(10, x) +"個→金インゴット"+ ((int)Math.pow(10, x)*4) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "金鉱石の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石炭の数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "金インゴットの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+18 , itemstack);
+		}
+
+		//溶岩バケツを消費して金鉱石を金インゴットに変換50～5万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("gold_ore"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("gold_ingot"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("lava_bucket"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.GOLD_INGOT,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.GOLD_INGOT);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "溶岩バケツを消費して金鉱石を金インゴットに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "金鉱石"+ ((int)Math.pow(10, x)*50) +"個+溶岩バケツ"+ (int)Math.pow(10, x) +"個→金インゴット"+ ((int)Math.pow(10, x)*50) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "金鉱石の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "溶岩バケツの数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "金インゴットの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+23 , itemstack);
+		}
+
+		//石炭を消費して砂をガラスに変換4～4000
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("sand"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("glass"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.GLASS,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.GLASS);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石炭を消費して砂をガラスに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "砂"+ ((int)Math.pow(10, x)*4) +"個+石炭"+ (int)Math.pow(10, x) +"個→ガラス"+ ((int)Math.pow(10, x)*4) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "砂の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石炭の数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ガラスの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+27 , itemstack);
+		}
+
+		//溶岩バケツを消費して砂をガラスに変換50～5万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("sand"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("glass"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("lava_bucket"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.GLASS,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.GLASS);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "溶岩バケツを消費して砂をガラスに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "砂"+ ((int)Math.pow(10, x)*50) +"個+溶岩バケツ"+ (int)Math.pow(10, x) +"個→ガラス"+ ((int)Math.pow(10, x)*50) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "砂の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "溶岩バケツの数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ガラスの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+32 , itemstack);
+		}
+
+		//石炭を消費してネザーラックをネザーレンガに変換4～4000
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("netherrack"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_brick_item"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.NETHER_BRICK_ITEM,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.NETHER_BRICK_ITEM);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石炭を消費してネザーラックをネザーレンガに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ネザーラック"+ ((int)Math.pow(10, x)*4) +"個+石炭"+ (int)Math.pow(10, x) +"個→ネザーレンガ"+ ((int)Math.pow(10, x)*4) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーラックの数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石炭の数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーレンガの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+36 , itemstack);
+		}
+
+		//溶岩バケツを消費してネザーラックをネザーレンガに変換50～5万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("netherrack"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_brick_item"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("lava_bucket"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.NETHER_BRICK_ITEM,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.NETHER_BRICK_ITEM);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "溶岩バケツを消費してネザーラックをネザーレンガに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "ネザーラック"+ ((int)Math.pow(10, x)*50) +"個+溶岩バケツ"+ (int)Math.pow(10, x) +"個→ネザーレンガ"+ ((int)Math.pow(10, x)*50) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーラックの数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "溶岩バケツの数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "ネザーレンガの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+41 , itemstack);
+		}
+		return inventory;
+	}
+
+	//MineStackブロック一括クラフトメニュー3
+	public static Inventory getBlockCraftData3(Player p){
+		//プレイヤーを取得
+		Player player = p.getPlayer();
+		//UUID取得
+		UUID uuid = player.getUniqueId();
+		//プレイヤーデータ
+//		PlayerData playerdata = BuildAssist.playermap.get(uuid);
+		com.github.unchama.seichiassist.data.PlayerData playerdata_s = SeichiAssist.playermap.get(uuid);
+		
+		Inventory inventory = Bukkit.getServer().createInventory(null,6*9,ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "MineStackブロック一括クラフト3");
+		ItemStack itemstack;
+		ItemMeta itemmeta;
+		SkullMeta skullmeta;
+		List<String> lore = new ArrayList<String>();
+
+		// 2ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1,(short) 3);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+//		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "2ページ目へ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowUp");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(45,itemstack);
+/*
+		// 4ページ目を開く
+		itemstack = new ItemStack(Material.SKULL_ITEM,1,(short) 3);
+		skullmeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+//		itemstack.setDurability((short) 3);
+		skullmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "4ページ目へ");
+		lore = Arrays.asList(ChatColor.RESET + "" +  ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで移動"
+				);
+		skullmeta.setLore(lore);
+		skullmeta.setOwner("MHF_ArrowDown");
+		itemstack.setItemMeta(skullmeta);
+		inventory.setItem(53,itemstack);
+*/
+
+		//石炭を消費して粘土をレンガに変換4～4000
+		int num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("clay_ball"));
+		int num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("brick_item"));
+		int num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.CLAY_BRICK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CLAY_BRICK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "石炭を消費して粘土をレンガに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "粘土"+ ((int)Math.pow(10, x)*4) +"個+石炭"+ (int)Math.pow(10, x) +"個→レンガ"+ ((int)Math.pow(10, x)*4) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "粘土の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "石炭の数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "レンガの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x , itemstack);
+		}
+
+		//溶岩バケツを消費して粘土をレンガに変換50～5万
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("clay_ball"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("brick_item"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("lava_bucket"));
+		for(int x = 0 ; x <= 3 ; x++){
+			itemstack = new ItemStack(Material.CLAY_BRICK,x);
+			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CLAY_BRICK);
+			itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "溶岩バケツを消費して粘土をレンガに変換します" );
+			lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "粘土"+ ((int)Math.pow(10, x)*50) +"個+溶岩バケツ"+ (int)Math.pow(10, x) +"個→レンガ"+ ((int)Math.pow(10, x)*50) +"個"
+					, ChatColor.RESET + "" + ChatColor.GRAY + "粘土の数:" + String.format("%,d",num_1)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "溶岩バケツの数:" + String.format("%,d",num_3)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "レンガの数:" + String.format("%,d",num_2)
+					, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel(3) + "以上で利用可能"
+					, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+					);
+			itemmeta.setLore(lore);
+			itemstack.setItemMeta(itemmeta);
+			inventory.setItem(x+5 , itemstack);
+		}
+/*
+		//ガチャ当たりをガチャ券に交換　半分
+		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("clay_ball"));
+		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ingot"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("brick_item"));
+		itemstack = new ItemStack(Material.CLAY_BRICK,1);
+		itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CLAY_BRICK);
+		itemmeta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + "ガチャ当たりをガチャ券に変換します" );
+		lore = Arrays.asList(ChatColor.RESET + "" + ChatColor.GRAY + "レアリティが当たり枠の景品のみ半分交換されます"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "大当たり、ギガンティックは対象外です"
+				, ChatColor.RESET + "" + ChatColor.GRAY + "石炭の数:" + String.format("%,d",num_3)
+				, ChatColor.RESET + "" + ChatColor.GRAY + "レンガの数:" + String.format("%,d",num_2)
+				, ChatColor.RESET + "" + ChatColor.GRAY + "建築LV" + BuildAssist.config.getMinestackBlockCraftlevel() + "以上で利用可能"
+				, ChatColor.RESET + "" + ChatColor.DARK_RED + "" + ChatColor.UNDERLINE + "クリックで変換"
+				);
+		itemmeta.setLore(lore);
+		itemstack.setItemMeta(itemmeta);
+		inventory.setItem(8 , itemstack);
+*/
+		return inventory;
+	}
+	
 }
