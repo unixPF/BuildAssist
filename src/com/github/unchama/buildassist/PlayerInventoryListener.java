@@ -723,7 +723,7 @@ public class PlayerInventoryListener implements Listener {
 					int x = itemstackcurrent.getAmount();
 					int id_1 = Util.MineStackobjname_indexOf("iron_ore");
 					int id_2 = Util.MineStackobjname_indexOf("iron_ingot");
-					int id_3 = Util.MineStackobjname_indexOf("polished_granite");
+					int id_3 = Util.MineStackobjname_indexOf("coal");
 					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					if ( ( playerdata_s.minestack.getNum(id_1) < ((int)Math.pow(10, x)*4) ) || ( playerdata_s.minestack.getNum(id_3) < (int)Math.pow(10, x) )){
 						player.sendMessage(ChatColor.RED + "アイテムが足りません" );
@@ -772,7 +772,7 @@ public class PlayerInventoryListener implements Listener {
 					int x = itemstackcurrent.getAmount();
 					int id_1 = Util.MineStackobjname_indexOf("gold_ore");
 					int id_2 = Util.MineStackobjname_indexOf("gold_ingot");
-					int id_3 = Util.MineStackobjname_indexOf("polished_granite");
+					int id_3 = Util.MineStackobjname_indexOf("coal");
 					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					if ( ( playerdata_s.minestack.getNum(id_1) < ((int)Math.pow(10, x)*4) ) || ( playerdata_s.minestack.getNum(id_3) < (int)Math.pow(10, x) )){
 						player.sendMessage(ChatColor.RED + "アイテムが足りません" );
@@ -821,7 +821,7 @@ public class PlayerInventoryListener implements Listener {
 					int x = itemstackcurrent.getAmount();
 					int id_1 = Util.MineStackobjname_indexOf("sand");
 					int id_2 = Util.MineStackobjname_indexOf("glass");
-					int id_3 = Util.MineStackobjname_indexOf("polished_granite");
+					int id_3 = Util.MineStackobjname_indexOf("coal");
 					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					if ( ( playerdata_s.minestack.getNum(id_1) < ((int)Math.pow(10, x)*4) ) || ( playerdata_s.minestack.getNum(id_3) < (int)Math.pow(10, x) )){
 						player.sendMessage(ChatColor.RED + "アイテムが足りません" );
@@ -870,7 +870,7 @@ public class PlayerInventoryListener implements Listener {
 					int x = itemstackcurrent.getAmount();
 					int id_1 = Util.MineStackobjname_indexOf("netherrack");
 					int id_2 = Util.MineStackobjname_indexOf("nether_brick_item");
-					int id_3 = Util.MineStackobjname_indexOf("polished_granite");
+					int id_3 = Util.MineStackobjname_indexOf("coal");
 					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					if ( ( playerdata_s.minestack.getNum(id_1) < ((int)Math.pow(10, x)*4) ) || ( playerdata_s.minestack.getNum(id_3) < (int)Math.pow(10, x) )){
 						player.sendMessage(ChatColor.RED + "アイテムが足りません" );
@@ -977,7 +977,7 @@ public class PlayerInventoryListener implements Listener {
 					int x = itemstackcurrent.getAmount();
 					int id_1 = Util.MineStackobjname_indexOf("clay_ball");
 					int id_2 = Util.MineStackobjname_indexOf("brick_item");
-					int id_3 = Util.MineStackobjname_indexOf("polished_granite");
+					int id_3 = Util.MineStackobjname_indexOf("coal");
 					player.playSound(player.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
 					if ( ( playerdata_s.minestack.getNum(id_1) < ((int)Math.pow(10, x)*4) ) || ( playerdata_s.minestack.getNum(id_3) < (int)Math.pow(10, x) )){
 						player.sendMessage(ChatColor.RED + "アイテムが足りません" );
