@@ -701,7 +701,7 @@ public class MenuInventoryData {
 		//石炭を消費して鉄鉱石を鉄インゴットに変換4～4000
 		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ore"));
 		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("iron_ingot"));
-		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("coal"));
 		for(int x = 0 ; x <= 3 ; x++){
 			itemstack = new ItemStack(Material.IRON_INGOT,x);
 			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.IRON_INGOT);
@@ -741,7 +741,7 @@ public class MenuInventoryData {
 		//石炭を消費して金鉱石を金インゴットに変換4～4000
 		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("gold_ore"));
 		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("gold_ingot"));
-		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("coal"));
 		for(int x = 0 ; x <= 3 ; x++){
 			itemstack = new ItemStack(Material.GOLD_INGOT,x);
 			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.GOLD_INGOT);
@@ -781,7 +781,7 @@ public class MenuInventoryData {
 		//石炭を消費して砂をガラスに変換4～4000
 		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("sand"));
 		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("glass"));
-		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("coal"));
 		for(int x = 0 ; x <= 3 ; x++){
 			itemstack = new ItemStack(Material.GLASS,x);
 			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.GLASS);
@@ -821,7 +821,7 @@ public class MenuInventoryData {
 		//石炭を消費してネザーラックをネザーレンガに変換4～4000
 		num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("netherrack"));
 		num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("nether_brick_item"));
-		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("coal"));
 		for(int x = 0 ; x <= 3 ; x++){
 			itemstack = new ItemStack(Material.NETHER_BRICK_ITEM,x);
 			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.NETHER_BRICK_ITEM);
@@ -904,7 +904,7 @@ public class MenuInventoryData {
 		//石炭を消費して粘土をレンガに変換4～4000
 		int num_1 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("clay_ball"));
 		int num_2 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("brick_item"));
-		int num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("polished_granite"));
+		int num_3 = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("coal"));
 		for(int x = 0 ; x <= 3 ; x++){
 			itemstack = new ItemStack(Material.CLAY_BRICK,x);
 			itemmeta = Bukkit.getItemFactory().getItemMeta(Material.CLAY_BRICK);
