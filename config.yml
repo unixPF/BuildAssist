@@ -16,5 +16,7 @@ BlockCountMag: '0.2'
 
 # MineStackブロック一括クラフト
 minestack_BlockCraft:
-  level: '25'
+  level1: '25'
+  level2: '35'
+  level3: '45'
   

@@ -103,7 +103,7 @@ public class BlockLineUp implements Listener{
 //				int py = pl.getBlockY()+1;
 				int py = (int)(pl.getY() + 1.6);
 				int pz = pl.getBlockZ();
-				
+				int no = -1;		//マインスタックのNo.
 				int double_mag = 1;//ハーフブロック重ね起きしたときフラグ
 				//プレイヤーの向いてる方向を判定
 				if (pitch > 45 ){//下
@@ -129,11 +129,24 @@ public class BlockLineUp implements Listener{
 				double mana_mag = BuildAssist.config.getblocklineupmana_mag();
 				
 				int max = mainhanditem.getAmount();//メインハンドのアイテム数を最大値に
-				//石ハーフでマインスタック優先の場合最大値をマインスタックの数を足す
+				//マインスタック優先の場合最大値をマインスタックの数を足す
 				if( playerdata.line_up_minestack_flg == 1 ){
+					for( int cnt = 0 ; cnt < SeichiAssist.minestacklist.size() ; cnt++){
+						if( m.equals( SeichiAssist.minestacklist.get(cnt).getMaterial() ) &&
+								d == SeichiAssist.minestacklist.get(cnt).getDurability()){
+							max += playerdata_s.minestack.getNum(cnt);
+							no = cnt;
+//							player.sendMessage("マインスタックNo.：" + no + "　max：" + max);
+							break;
+						}
+						
+					}
+					/*
+					//石ハーフ
 					if (m == Material.STEP && d == 0){
 						max += playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("step0"));
 					}
+					*/
 				}
 				//マナが途中で足りなくなる場合はマナの最大にする
 				if ( playerdata_s.activeskilldata.mana.getMana()- (double)(max) * mana_mag < 0.0 ){
@@ -197,11 +210,11 @@ public class BlockLineUp implements Listener{
 				}
 				v *= double_mag;	//ハーフ2段重ねの場合は2倍
 				
-				//石ハーフでマインスタック優先の場合マインスタックの数を減らす
-				if( playerdata.line_up_minestack_flg == 1 ){
-					if ( m == Material.STEP && (d == 0 || d == 8 ) || ( m == Material.DOUBLE_STEP && d == 0 )){
-						int num = playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("step0")) - v;
-//						player.sendMessage("マインスタック設置前残:" + playerdata_s.minestack.getNum(Util.MineStackobjname_indexOf("step0")));
+				//マインスタック優先の場合マインスタックの数を減らす
+				if( playerdata.line_up_minestack_flg == 1 && no > -1){
+//					if ( m == Material.STEP && (d == 0 || d == 8 ) || ( m == Material.DOUBLE_STEP && d == 0 )){
+						int num = playerdata_s.minestack.getNum(no) - v;
+//						player.sendMessage("マインスタック設置前残:" + playerdata_s.minestack.getNum(no));
 //						player.sendMessage("設置数:" + v);
 						if( num < 0 ){
 							v = num * (-1);
@@ -210,8 +223,8 @@ public class BlockLineUp implements Listener{
 							v = 0;
 						}
 //						player.sendMessage("メインハンド消費:" + v +" マインスタック残:" + num);
-						playerdata_s.minestack.setNum(Util.MineStackobjname_indexOf("step0") , num);
-					}
+						playerdata_s.minestack.setNum(no , num);
+//					}
 				}
 				if (mainhanditem.getAmount() - v <= 0 ){//アイテム数が0ならメインハンドのアイテムをクリア
 //					mainhanditem.setType(Material.AIR);
@@ -220,7 +233,7 @@ public class BlockLineUp implements Listener{
 				}else{	//0じゃないなら設置した分を引く
 					mainhanditem.setAmount(mainhanditem.getAmount() - v );
 				}
-				playerdata_s.activeskilldata.mana.decreaseMana((double)(v) * mana_mag , player, playerdata_s.level);
+//				playerdata_s.activeskilldata.mana.decreaseMana((double)(v) * mana_mag , player, playerdata_s.level);
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_PLACE, 1, 1);
 				
 				//カウント対象ワールドかチェック
