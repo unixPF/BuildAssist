@@ -82,8 +82,8 @@ public class Config{
 	}
 	
 	//MineStackブロック一括クラフト開放LV
-	public int getMinestackBlockCraftlevel() {
-		return Util.toInt(config.getString("minestack_BlockCraft.level"));
+	public int getMinestackBlockCraftlevel(int lv) {
+		return Util.toInt(config.getString("minestack_BlockCraft.level" + lv ));
 	}
 	
 }

@@ -169,7 +169,7 @@ public class BuildAssist extends JavaPlugin {
 			,Material.THIN_GLASS//板ガラス
 			,Material.NETHER_FENCE//ネザーフェンス
 			,Material.STAINED_GLASS_PANE//色付き板ガラス
-			,Material.LEAVES_2//葉2
+//			,Material.LEAVES_2//葉2		設置した葉が時間経過で消えるので除外
 			,Material.SLIME_BLOCK//スライムB
 //			,Material.CARPET//カーペット
 			,Material.SPRUCE_FENCE//松フェンス
