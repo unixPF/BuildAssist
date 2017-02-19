@@ -37,7 +37,7 @@ public class BlockPlaceEventListener implements Listener {
 				return;
 			}
 
-			playerdata.totalbuildnum++;
+			playerdata.build_num_1min++;
 //			player.sendMessage(""+b.getType() + ":"+b.getData());
 //		}
 
