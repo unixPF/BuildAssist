@@ -86,4 +86,9 @@ public class Config{
 		return Util.toInt(config.getString("minestack_BlockCraft.level" + lv ));
 	}
 	
+	//MineStackブロック一括クラフト開放LV
+	public int getBuildNum1minLimit() {
+		return Util.toInt(config.getString("BuildNum1minLimit" ));
+	}
+	
 }
