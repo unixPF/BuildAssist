@@ -32,6 +32,17 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 
 				int minus = -BuildAssist.config.getFlyExp();
 
+				//1分間の建築量を加算する
+//				player.sendMessage("1分の設置数:" + playerdata.build_num_1min);
+//				player.sendMessage("累計設置数:" + playerdata.totalbuildnum);
+				if( playerdata.build_num_1min > BuildAssist.config.getBuildNum1minLimit() ){
+					playerdata.totalbuildnum += BuildAssist.config.getBuildNum1minLimit();
+				}else{
+					playerdata.totalbuildnum += playerdata.build_num_1min;
+				}
+				playerdata.build_num_1min = 0;
+//				player.sendMessage("累計設置数:" + playerdata.totalbuildnum);
+				
 				playerdata.levelupdata(player);
 				playerdata.buildsave(player);
 				

@@ -309,7 +309,7 @@ public class PlayerRightClickListener implements Listener  {
 					player.sendMessage(ChatColor.RED + "敷き詰めスキル：処理終了" ) ;
 					
 					if( com.github.unchama.buildassist.Util.isBlockCount(player) == true){
-						playerdata.totalbuildnum += ( block_cnt * BuildAssist.config.getBlockCountMag() );	//設置した数を足す
+						playerdata.build_num_1min += ( block_cnt * BuildAssist.config.getBlockCountMag() );	//設置した数を足す
 					}
 
 					return;

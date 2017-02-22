@@ -86,4 +86,9 @@ public class Config{
 		return Util.toInt(config.getString("minestack_BlockCraft.level" + lv ));
 	}
 	
+	//ブロック設置カウントの1分上限
+	public int getBuildNum1minLimit() {
+		return Util.toInt(config.getString("BuildNum1minLimit" ));
+	}
+	
 }

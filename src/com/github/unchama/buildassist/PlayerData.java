@@ -12,7 +12,7 @@ public class PlayerData {
 	public String name;
 	public UUID uuid;
 	public int level;
-	//ランキング算出用トータル破壊ブロック
+	//トータル設置ブロック数
 	public int totalbuildnum;
 
 	public boolean flyflag;
@@ -22,6 +22,8 @@ public class PlayerData {
 	public boolean zsSkillDirtFlag;
 	public int AREAint ;
 
+	public int build_num_1min;			//1分のブロック設置数
+	
 	//ブロックを並べるスキル設定フラグ
 	public int line_up_flg;
 	public int line_up_step_flg;
@@ -49,6 +51,8 @@ public class PlayerData {
 			line_up_step_flg = 0;
 			line_up_des_flg = 0;
 			line_up_minestack_flg = 0;
+			
+			build_num_1min = 0;
 
 		}
 		//レベルを更新

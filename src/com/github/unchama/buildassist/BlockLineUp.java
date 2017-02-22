@@ -209,6 +209,10 @@ public class BlockLineUp implements Listener{
 
 				}
 				v *= double_mag;	//ハーフ2段重ねの場合は2倍
+				//カウント対象ワールドの場合カウント値を足す
+				if( com.github.unchama.buildassist.Util.isBlockCount(player) == true){	//対象ワールドかチェック
+					playerdata.build_num_1min += ( v * BuildAssist.config.getBlockCountMag() );	//設置した数を足す
+				}
 				
 				//マインスタック優先の場合マインスタックの数を減らす
 				if( playerdata.line_up_minestack_flg == 1 && no > -1){
@@ -236,10 +240,6 @@ public class BlockLineUp implements Listener{
 //				playerdata_s.activeskilldata.mana.decreaseMana((double)(v) * mana_mag , player, playerdata_s.level);
 				player.playSound(player.getLocation(), Sound.BLOCK_STONE_PLACE, 1, 1);
 				
-				//カウント対象ワールドかチェック
-				if( com.github.unchama.buildassist.Util.isBlockCount(player) == true){
-					playerdata.totalbuildnum += ( v * BuildAssist.config.getBlockCountMag() );	//設置した数を足す
-				}
 //				player.sendMessage("v:" + v +" d:" + d);
 //				player.sendMessage("マナ:" + playerdata_s.activeskilldata.mana.getMana() );
 				
