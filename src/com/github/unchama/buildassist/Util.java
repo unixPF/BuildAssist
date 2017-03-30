@@ -78,15 +78,15 @@ public static boolean isSkillEnable(Player player){
 		}
 		//プレイヤーの場所がメインワールド(world)にいる場合
 		if( player.getWorld().getName().equalsIgnoreCase("world")
-//			|| player.getWorld().getName().equalsIgnoreCase("world_nether")
-//			|| player.getWorld().getName().equalsIgnoreCase("world_the_end")
+			|| player.getWorld().getName().equalsIgnoreCase("world_nether")
+			|| player.getWorld().getName().equalsIgnoreCase("world_the_end")
 		){
 			return true;
 		}
 		//それ以外のワールドの場合
 		return false;
 	}
-	
+
 	//指定した名前のマインスタックの番号を返す		見つからなかった場合は-1
 	//名前はSeichiAssist.javaのminestacklistに定義されてる英語名
 	public static int MineStackobjname_indexOf(String s){
@@ -99,6 +99,6 @@ public static boolean isSkillEnable(Player player){
 		}
 		return id;
 	}
-	
-	
+
+
 }
