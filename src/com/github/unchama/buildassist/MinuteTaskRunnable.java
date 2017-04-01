@@ -42,10 +42,10 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 				}
 				playerdata.build_num_1min = 0;
 //				player.sendMessage("累計設置数:" + playerdata.totalbuildnum);
-				
+
 				playerdata.levelupdata(player);
 				playerdata.buildsave(player);
-				
+
 				if (playerdata.Endlessfly) {
 					if (!expman.hasExp(BuildAssist.config.getFlyExp())) {
 						player.sendMessage(ChatColor.RED
@@ -63,7 +63,7 @@ public class MinuteTaskRunnable extends BukkitRunnable {
 					}
 				}else if (playerdata.flyflag) {
 					int flytime = playerdata.flytime;
-					if (flytime == 0) {
+					if (flytime <= 0) {
 						player.sendMessage(ChatColor.GREEN + "Fly効果が終了しました");
 						playerdata.flyflag = false;
 						player.setAllowFlight(false);
